@@ -15,7 +15,7 @@ public class News {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Link to the user who created the news
+    private User user;
 
     @Column(name = "title", nullable = false, length = 255)
     private String title;
@@ -32,7 +32,6 @@ public class News {
     @Column(name = "published_date")
     private LocalDate publishedDate;
 
-    // Constructors
     public News() {}
 
     public News(User user, String title, String content, LocalDate publishedDate) {
@@ -49,7 +48,6 @@ public class News {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,7 +55,6 @@ public class News {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -65,7 +62,6 @@ public class News {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -73,7 +69,6 @@ public class News {
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
@@ -81,7 +76,6 @@ public class News {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
@@ -89,7 +83,6 @@ public class News {
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
@@ -97,7 +90,6 @@ public class News {
     public LocalDate getPublishedDate() {
         return publishedDate;
     }
-
     public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }

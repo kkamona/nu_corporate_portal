@@ -35,9 +35,9 @@ public class NewsController {
         return ResponseEntity.ok(newsService.getNewsByUserId(userId));
     }
 
-   @GetMapping("/date/{date}")
+    @GetMapping("/date/{date}")
     public ResponseEntity<List<News>> getNewsByPublishedDate(@PathVariable String date) {
-        LocalDate publishedDate = LocalDate.parse(date); // Expects date in yyyy-MM-dd format
+        LocalDate publishedDate = LocalDate.parse(date); // Expects format "yyyy-MM-dd"
         return ResponseEntity.ok(newsService.getNewsByPublishedDate(publishedDate));
     }
 
@@ -49,6 +49,12 @@ public class NewsController {
     @PutMapping("/{id}")
     public ResponseEntity<News> updateNews(@PathVariable Long id, @RequestBody News updatedNews) {
         return ResponseEntity.ok(newsService.updateNews(id, updatedNews));
+    }
+
+    // New endpoint for publishing news
+    @PutMapping("/{id}/publish")
+    public ResponseEntity<News> publishNews(@PathVariable Long id) {
+        return ResponseEntity.ok(newsService.publishNews(id));
     }
 
     @DeleteMapping("/{id}")

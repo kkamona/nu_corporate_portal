@@ -18,7 +18,7 @@ public class Content {
 
     @Convert(converter = ContentTypeConverter.class)
     @Column(name = "type", nullable = false)
-    private ContentType type; // Will store 'video', 'photo', 'formatted text', etc.
+    private ContentType type;
 
     @Column(name = "file_url", length = 255)
     private String fileUrl;
@@ -35,7 +35,6 @@ public class Content {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    // Constructors
     public Content() {}
 
     public Content(User user, ContentType type, String fileUrl, String title, String contentText) {
@@ -48,7 +47,7 @@ public class Content {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters & Setters
+    // Getters and Setters
 
     public Long getId() {
         return id;

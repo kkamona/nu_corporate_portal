@@ -34,11 +34,6 @@ public class NewsService {
         return newsRepository.findByUserId(userId);
     }
 
-    public boolean newsExistsForUser(Long userId) {
-        List<News> newsList = getNewsByUserId(userId);
-        return newsList != null && !newsList.isEmpty();
-    }
-
     public List<News> getNewsByPublishedDate(LocalDate date) {
         return newsRepository.findByPublishedDate(date);
     }
@@ -46,6 +41,7 @@ public class NewsService {
     public News createNews(News news) {
         news.setCreatedAt(LocalDateTime.now());
         news.setUpdatedAt(LocalDateTime.now());
+        // Initially, the news is not published until the publish endpoint is invoked.
         return newsRepository.save(news);
     }
 
@@ -61,5 +57,15 @@ public class NewsService {
     public void deleteNews(Long id) {
         News existingNews = getNewsById(id);
         newsRepository.delete(existingNews);
+    }
+
+    // Publishing functionality: sets the published date if not already set, and updates the updatedAt timestamp.
+    public News publishNews(Long id) {
+        News existingNews = getNewsById(id);
+        if (existingNews.getPublishedDate() == null) {
+            existingNews.setPublishedDate(LocalDate.now());
+        }
+        existingNews.setUpdatedAt(LocalDateTime.now());
+        return newsRepository.save(existingNews);
     }
 }

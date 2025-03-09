@@ -1,4 +1,4 @@
-package edu.nu.corporate_portal.controllers;
+package edu.nu.corporate_portal.controller;
 
 import edu.nu.corporate_portal.models.Content;
 import edu.nu.corporate_portal.models.ContentType;
@@ -37,19 +37,33 @@ public class ContentController {
 
     @GetMapping("/type/{dbValue}")
     public ResponseEntity<List<Content>> getContentByType(@PathVariable String dbValue) {
-        // Convert string to enum using the converter logic (or do it manually)
-        // If your DB uses EXACT strings: 'video', 'photo', 'formatted text', etc.
-        // You can do a small switch or a custom method:
+        // Convert the provided string to the enum value.
         ContentType type;
-        switch (dbValue) {
-            case "video":            type = ContentType.VIDEO;           break;
-            case "photo":            type = ContentType.PHOTO;           break;
-            case "formatted text":   type = ContentType.FORMATTED_TEXT;  break;
-            case "table":            type = ContentType.TABLE;           break;
-            case "docx":             type = ContentType.DOCX;            break;
-            case "xlsx":             type = ContentType.XLSX;            break;
-            case "pptx":             type = ContentType.PPTX;            break;
-            case "pdf":              type = ContentType.PDF;             break;
+        switch (dbValue.toLowerCase()) {
+            case "video":
+                type = ContentType.VIDEO;
+                break;
+            case "photo":
+                type = ContentType.PHOTO;
+                break;
+            case "formatted text":
+                type = ContentType.FORMATTED_TEXT;
+                break;
+            case "table":
+                type = ContentType.TABLE;
+                break;
+            case "docx":
+                type = ContentType.DOCX;
+                break;
+            case "xlsx":
+                type = ContentType.XLSX;
+                break;
+            case "pptx":
+                type = ContentType.PPTX;
+                break;
+            case "pdf":
+                type = ContentType.PDF;
+                break;
             default:
                 return ResponseEntity.badRequest().build();
         }
