@@ -1,22 +1,29 @@
 package edu.nu.corporate_portal.services;
 
+import edu.nu.corporate_portal.DTO.Phonebook.PhonebookPatchDTO;
+import edu.nu.corporate_portal.DTO.Phonebook.PhonebookPostDTO;
 import edu.nu.corporate_portal.models.Phonebook;
+import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.repository.PhonebookRepository;
+import edu.nu.corporate_portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class PhonebookService {
 
     private final PhonebookRepository phonebookRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PhonebookService(PhonebookRepository phonebookRepository) {
+    public PhonebookService(PhonebookRepository phonebookRepository, UserRepository userRepository) {
         this.phonebookRepository = phonebookRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Phonebook> getAllPhonebookEntries() {
@@ -36,18 +43,33 @@ public class PhonebookService {
         return phonebookRepository.findByType(type);
     }
 
-    public Phonebook createPhonebookEntry(Phonebook phonebook) {
-        return phonebookRepository.save(phonebook);
+    public Phonebook createPhonebookEntry(PhonebookPostDTO dto) {
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        Phonebook entry = new Phonebook(
+                user,
+                dto.getName(),
+                dto.getPhoneNumber(),
+                dto.getEmail(),
+                dto.getDepartment(),
+                dto.getType()
+        );
+
+        return phonebookRepository.save(entry);
     }
 
-    public Phonebook updatePhonebookEntry(Long id, Phonebook updatedEntry) {
+    public Phonebook updatePhonebookEntry(Long id, PhonebookPatchDTO dto) {
         Phonebook existingEntry = getPhonebookEntryById(id);
-        existingEntry.setUser(updatedEntry.getUser());
-        existingEntry.setName(updatedEntry.getName());
-        existingEntry.setDepartment(updatedEntry.getDepartment());
-        existingEntry.setPhoneNumber(updatedEntry.getPhoneNumber());
-        existingEntry.setEmail(updatedEntry.getEmail());
-        existingEntry.setType(updatedEntry.getType());
+
+        if (dto.getName() != null) existingEntry.setName(dto.getName());
+        if (dto.getPhoneNumber() != null) existingEntry.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getEmail() != null) existingEntry.setEmail(dto.getEmail());
+        if (dto.getDepartment() != null) existingEntry.setDepartment(dto.getDepartment());
+        if (dto.getType() != null) existingEntry.setType(dto.getType());
+
+        existingEntry.setUpdatedAt(LocalDateTime.now());
+
         return phonebookRepository.save(existingEntry);
     }
 
@@ -61,3 +83,4 @@ public class PhonebookService {
         return entries != null && !entries.isEmpty();
     }
 }
+

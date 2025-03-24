@@ -1,5 +1,8 @@
 package edu.nu.corporate_portal.controllers;
 
+import edu.nu.corporate_portal.DTO.BirthdayWidget.BirthdayWidgetGetDTO;
+import edu.nu.corporate_portal.DTO.BirthdayWidget.BirthdayWidgetPatchDTO;
+import edu.nu.corporate_portal.DTO.BirthdayWidget.BirthdayWidgetPostDTO;
 import edu.nu.corporate_portal.models.BirthdayWidget;
 import edu.nu.corporate_portal.services.BirthdayWidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +24,48 @@ public class BirthdayWidgetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BirthdayWidget>> getAllWidgets() {
-        return ResponseEntity.ok(birthdayWidgetService.getAllWidgets());
+    public ResponseEntity<List<BirthdayWidgetGetDTO>> getAllWidgets() {
+        List<BirthdayWidgetGetDTO> list = birthdayWidgetService.getAllWidgets()
+                .stream()
+                .map(BirthdayWidgetGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BirthdayWidget> getWidgetById(@PathVariable Long id) {
-        return ResponseEntity.ok(birthdayWidgetService.getWidgetById(id));
+    public ResponseEntity<BirthdayWidgetGetDTO> getWidgetById(@PathVariable Long id) {
+        return ResponseEntity.ok(new BirthdayWidgetGetDTO(birthdayWidgetService.getWidgetById(id)));
     }
 
     @GetMapping("/date/{date}")
-    public ResponseEntity<List<BirthdayWidget>> getWidgetsByBirthDate(@PathVariable String date) {
-        LocalDate birthDate = LocalDate.parse(date); // Expecting format "yyyy-MM-dd"
-        return ResponseEntity.ok(birthdayWidgetService.getWidgetsByBirthDate(birthDate));
+    public ResponseEntity<List<BirthdayWidgetGetDTO>> getWidgetsByBirthDate(@PathVariable String date) {
+        LocalDate birthDate = LocalDate.parse(date);
+        List<BirthdayWidgetGetDTO> list = birthdayWidgetService.getWidgetsByBirthDate(birthDate)
+                .stream()
+                .map(BirthdayWidgetGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<BirthdayWidget>> getWidgetsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(birthdayWidgetService.getWidgetsByUserId(userId));
+    public ResponseEntity<List<BirthdayWidgetGetDTO>> getWidgetsByUserId(@PathVariable Long userId) {
+        List<BirthdayWidgetGetDTO> list = birthdayWidgetService.getWidgetsByUserId(userId)
+                .stream()
+                .map(BirthdayWidgetGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping
-    public ResponseEntity<BirthdayWidget> createWidget(@RequestBody BirthdayWidget widget) {
-        return ResponseEntity.ok(birthdayWidgetService.createWidget(widget));
+    public ResponseEntity<BirthdayWidgetGetDTO> createWidget(@RequestBody BirthdayWidgetPostDTO dto) {
+        BirthdayWidget created = birthdayWidgetService.createWidget(dto);
+        return ResponseEntity.ok(new BirthdayWidgetGetDTO(created));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BirthdayWidget> updateWidget(@PathVariable Long id, @RequestBody BirthdayWidget updatedWidget) {
-        return ResponseEntity.ok(birthdayWidgetService.updateWidget(id, updatedWidget));
+    @PatchMapping("/{id}")
+    public ResponseEntity<BirthdayWidgetGetDTO> updateWidget(@PathVariable Long id, @RequestBody BirthdayWidgetPatchDTO dto) {
+        BirthdayWidget updated = birthdayWidgetService.updateWidget(id, dto);
+        return ResponseEntity.ok(new BirthdayWidgetGetDTO(updated));
     }
 
     @DeleteMapping("/{id}")
@@ -57,3 +74,4 @@ public class BirthdayWidgetController {
         return ResponseEntity.noContent().build();
     }
 }
+

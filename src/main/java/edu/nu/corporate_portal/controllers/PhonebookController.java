@@ -1,5 +1,8 @@
 package edu.nu.corporate_portal.controllers;
 
+import edu.nu.corporate_portal.DTO.Phonebook.PhonebookGetDTO;
+import edu.nu.corporate_portal.DTO.Phonebook.PhonebookPatchDTO;
+import edu.nu.corporate_portal.DTO.Phonebook.PhonebookPostDTO;
 import edu.nu.corporate_portal.models.Phonebook;
 import edu.nu.corporate_portal.services.PhonebookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,33 +23,48 @@ public class PhonebookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Phonebook>> getAllPhonebookEntries() {
-        return ResponseEntity.ok(phonebookService.getAllPhonebookEntries());
+    public ResponseEntity<List<PhonebookGetDTO>> getAllPhonebookEntries() {
+        List<Phonebook> entries = phonebookService.getAllPhonebookEntries();
+        List<PhonebookGetDTO> dtoList = entries.stream()
+                .map(PhonebookGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Phonebook>> getPhonebookEntriesByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(phonebookService.getPhonebookEntriesByUserId(userId));
+    public ResponseEntity<List<PhonebookGetDTO>> getPhonebookEntriesByUserId(@PathVariable Long userId) {
+        List<Phonebook> entries = phonebookService.getPhonebookEntriesByUserId(userId);
+        List<PhonebookGetDTO> dtoList = entries.stream()
+                .map(PhonebookGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/type/{type}")
-    public ResponseEntity<List<Phonebook>> getPhonebookEntriesByType(@PathVariable String type) {
-        return ResponseEntity.ok(phonebookService.getPhonebookEntriesByType(type));
+    public ResponseEntity<List<PhonebookGetDTO>> getPhonebookEntriesByType(@PathVariable String type) {
+        List<Phonebook> entries = phonebookService.getPhonebookEntriesByType(type);
+        List<PhonebookGetDTO> dtoList = entries.stream()
+                .map(PhonebookGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Phonebook> getPhonebookEntryById(@PathVariable Long id) {
-        return ResponseEntity.ok(phonebookService.getPhonebookEntryById(id));
+    public ResponseEntity<PhonebookGetDTO> getPhonebookEntryById(@PathVariable Long id) {
+        Phonebook entry = phonebookService.getPhonebookEntryById(id);
+        return ResponseEntity.ok(new PhonebookGetDTO(entry));
     }
 
     @PostMapping
-    public ResponseEntity<Phonebook> createPhonebookEntry(@RequestBody Phonebook phonebook) {
-        return ResponseEntity.ok(phonebookService.createPhonebookEntry(phonebook));
+    public ResponseEntity<PhonebookGetDTO> createPhonebookEntry(@RequestBody PhonebookPostDTO dto) {
+        Phonebook created = phonebookService.createPhonebookEntry(dto);
+        return ResponseEntity.ok(new PhonebookGetDTO(created));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Phonebook> updatePhonebookEntry(@PathVariable Long id, @RequestBody Phonebook updatedEntry) {
-        return ResponseEntity.ok(phonebookService.updatePhonebookEntry(id, updatedEntry));
+    @PatchMapping("/{id}")
+    public ResponseEntity<PhonebookGetDTO> updatePhonebookEntry(@PathVariable Long id, @RequestBody PhonebookPatchDTO dto) {
+        Phonebook updated = phonebookService.updatePhonebookEntry(id, dto);
+        return ResponseEntity.ok(new PhonebookGetDTO(updated));
     }
 
     @DeleteMapping("/{id}")
@@ -55,3 +73,4 @@ public class PhonebookController {
         return ResponseEntity.noContent().build();
     }
 }
+

@@ -1,5 +1,8 @@
 package edu.nu.corporate_portal.controllers;
 
+import edu.nu.corporate_portal.DTO.News.NewsGetDTO;
+import edu.nu.corporate_portal.DTO.News.NewsPatchDTO;
+import edu.nu.corporate_portal.DTO.News.NewsPostDTO;
 import edu.nu.corporate_portal.models.News;
 import edu.nu.corporate_portal.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,40 +24,54 @@ public class NewsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<News>> getAllNews() {
-        return ResponseEntity.ok(newsService.getAllNews());
+    public ResponseEntity<List<NewsGetDTO>> getAllNews() {
+        List<NewsGetDTO> newsList = newsService.getAllNews()
+                .stream()
+                .map(NewsGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(newsList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<News> getNewsById(@PathVariable Long id) {
-        return ResponseEntity.ok(newsService.getNewsById(id));
+    public ResponseEntity<NewsGetDTO> getNewsById(@PathVariable Long id) {
+        return ResponseEntity.ok(new NewsGetDTO(newsService.getNewsById(id)));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<News>> getNewsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(newsService.getNewsByUserId(userId));
+    public ResponseEntity<List<NewsGetDTO>> getNewsByUserId(@PathVariable Long userId) {
+        List<NewsGetDTO> newsList = newsService.getNewsByUserId(userId)
+                .stream()
+                .map(NewsGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(newsList);
     }
 
     @GetMapping("/date/{date}")
-    public ResponseEntity<List<News>> getNewsByPublishedDate(@PathVariable String date) {
-        LocalDate publishedDate = LocalDate.parse(date); // Expects format "yyyy-MM-dd"
-        return ResponseEntity.ok(newsService.getNewsByPublishedDate(publishedDate));
+    public ResponseEntity<List<NewsGetDTO>> getNewsByPublishedDate(@PathVariable String date) {
+        LocalDate publishedDate = LocalDate.parse(date);
+        List<NewsGetDTO> newsList = newsService.getNewsByPublishedDate(publishedDate)
+                .stream()
+                .map(NewsGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(newsList);
     }
 
     @PostMapping
-    public ResponseEntity<News> createNews(@RequestBody News news) {
-        return ResponseEntity.ok(newsService.createNews(news));
+    public ResponseEntity<NewsGetDTO> createNews(@RequestBody NewsPostDTO dto) {
+        News news = newsService.createNews(dto);
+        return ResponseEntity.ok(new NewsGetDTO(news));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<News> updateNews(@PathVariable Long id, @RequestBody News updatedNews) {
-        return ResponseEntity.ok(newsService.updateNews(id, updatedNews));
+    @PatchMapping("/{id}")
+    public ResponseEntity<NewsGetDTO> updateNews(@PathVariable Long id, @RequestBody NewsPatchDTO dto) {
+        News updatedNews = newsService.updateNews(id, dto);
+        return ResponseEntity.ok(new NewsGetDTO(updatedNews));
     }
 
-    // New endpoint for publishing news
-    @PutMapping("/{id}/publish")
-    public ResponseEntity<News> publishNews(@PathVariable Long id) {
-        return ResponseEntity.ok(newsService.publishNews(id));
+    @PostMapping("/{id}/publish")
+    public ResponseEntity<NewsGetDTO> publishNews(@PathVariable Long id) {
+        News publishedNews = newsService.publishNews(id);
+        return ResponseEntity.ok(new NewsGetDTO(publishedNews));
     }
 
     @DeleteMapping("/{id}")

@@ -1,7 +1,11 @@
 package edu.nu.corporate_portal.services;
 
+import edu.nu.corporate_portal.DTO.News.NewsPatchDTO;
+import edu.nu.corporate_portal.DTO.News.NewsPostDTO;
 import edu.nu.corporate_portal.models.News;
+import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.repository.NewsRepository;
+import edu.nu.corporate_portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,10 +19,12 @@ import java.util.List;
 public class NewsService {
 
     private final NewsRepository newsRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public NewsService(NewsRepository newsRepository) {
+    public NewsService(NewsRepository newsRepository, UserRepository userRepository) {
         this.newsRepository = newsRepository;
+        this.userRepository = userRepository;
     }
 
     public List<News> getAllNews() {
@@ -38,20 +44,30 @@ public class NewsService {
         return newsRepository.findByPublishedDate(date);
     }
 
-    public News createNews(News news) {
+    public News createNews(NewsPostDTO dto) {
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        News news = new News();
+        news.setUser(user);
+        news.setTitle(dto.getTitle());
+        news.setContent(dto.getContent());
         news.setCreatedAt(LocalDateTime.now());
         news.setUpdatedAt(LocalDateTime.now());
-        // Initially, the news is not published until the publish endpoint is invoked.
+
         return newsRepository.save(news);
     }
 
-    public News updateNews(Long id, News updatedNews) {
-        News existingNews = getNewsById(id);
-        existingNews.setTitle(updatedNews.getTitle());
-        existingNews.setContent(updatedNews.getContent());
-        existingNews.setPublishedDate(updatedNews.getPublishedDate());
-        existingNews.setUpdatedAt(LocalDateTime.now());
-        return newsRepository.save(existingNews);
+    public News updateNews(Long id, NewsPatchDTO dto) {
+        News news = getNewsById(id);
+
+        if (dto.getTitle() != null) news.setTitle(dto.getTitle());
+        if (dto.getContent() != null) news.setContent(dto.getContent());
+        if (dto.getPublishedDate() != null) news.setPublishedDate(dto.getPublishedDate());
+
+        news.setUpdatedAt(LocalDateTime.now());
+
+        return newsRepository.save(news);
     }
 
     public void deleteNews(Long id) {
@@ -59,13 +75,12 @@ public class NewsService {
         newsRepository.delete(existingNews);
     }
 
-    // Publishing functionality: sets the published date if not already set, and updates the updatedAt timestamp.
     public News publishNews(Long id) {
-        News existingNews = getNewsById(id);
-        if (existingNews.getPublishedDate() == null) {
-            existingNews.setPublishedDate(LocalDate.now());
+        News news = getNewsById(id);
+        if (news.getPublishedDate() == null) {
+            news.setPublishedDate(LocalDate.now());
         }
-        existingNews.setUpdatedAt(LocalDateTime.now());
-        return newsRepository.save(existingNews);
+        news.setUpdatedAt(LocalDateTime.now());
+        return newsRepository.save(news);
     }
 }

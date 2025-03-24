@@ -1,5 +1,8 @@
 package edu.nu.corporate_portal.controller;
 
+import edu.nu.corporate_portal.DTO.Content.ContentGetDTO;
+import edu.nu.corporate_portal.DTO.Content.ContentPatchDTO;
+import edu.nu.corporate_portal.DTO.Content.ContentPostDTO;
 import edu.nu.corporate_portal.models.Content;
 import edu.nu.corporate_portal.models.ContentType;
 import edu.nu.corporate_portal.services.ContentService;
@@ -21,63 +24,52 @@ public class ContentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Content>> getAllContent() {
-        return ResponseEntity.ok(contentService.getAllContent());
+    public ResponseEntity<List<ContentGetDTO>> getAllContent() {
+        List<ContentGetDTO> list = contentService.getAllContent()
+                .stream()
+                .map(ContentGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Content> getContentById(@PathVariable Long id) {
-        return ResponseEntity.ok(contentService.getContentById(id));
+    public ResponseEntity<ContentGetDTO> getContentById(@PathVariable Long id) {
+        return ResponseEntity.ok(new ContentGetDTO(contentService.getContentById(id)));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Content>> getContentByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(contentService.getContentByUserId(userId));
+    public ResponseEntity<List<ContentGetDTO>> getContentByUserId(@PathVariable Long userId) {
+        List<ContentGetDTO> list = contentService.getContentByUserId(userId)
+                .stream()
+                .map(ContentGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/type/{dbValue}")
-    public ResponseEntity<List<Content>> getContentByType(@PathVariable String dbValue) {
-        // Convert the provided string to the enum value.
-        ContentType type;
-        switch (dbValue.toLowerCase()) {
-            case "video":
-                type = ContentType.VIDEO;
-                break;
-            case "photo":
-                type = ContentType.PHOTO;
-                break;
-            case "formatted text":
-                type = ContentType.FORMATTED_TEXT;
-                break;
-            case "table":
-                type = ContentType.TABLE;
-                break;
-            case "docx":
-                type = ContentType.DOCX;
-                break;
-            case "xlsx":
-                type = ContentType.XLSX;
-                break;
-            case "pptx":
-                type = ContentType.PPTX;
-                break;
-            case "pdf":
-                type = ContentType.PDF;
-                break;
-            default:
-                return ResponseEntity.badRequest().build();
+    public ResponseEntity<List<ContentGetDTO>> getContentByType(@PathVariable String dbValue) {
+        try {
+            ContentType type = ContentType.valueOf(dbValue.toUpperCase().replace(" ", "_"));
+            List<ContentGetDTO> list = contentService.getContentByType(type)
+                    .stream()
+                    .map(ContentGetDTO::new)
+                    .toList();
+            return ResponseEntity.ok(list);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(contentService.getContentByType(type));
     }
 
     @PostMapping
-    public ResponseEntity<Content> createContent(@RequestBody Content content) {
-        return ResponseEntity.ok(contentService.createContent(content));
+    public ResponseEntity<ContentGetDTO> createContent(@RequestBody ContentPostDTO dto) {
+        Content created = contentService.createContent(dto);
+        return ResponseEntity.ok(new ContentGetDTO(created));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Content> updateContent(@PathVariable Long id, @RequestBody Content updatedContent) {
-        return ResponseEntity.ok(contentService.updateContent(id, updatedContent));
+    @PatchMapping("/{id}")
+    public ResponseEntity<ContentGetDTO> updateContent(@PathVariable Long id, @RequestBody ContentPatchDTO dto) {
+        Content updated = contentService.updateContent(id, dto);
+        return ResponseEntity.ok(new ContentGetDTO(updated));
     }
 
     @DeleteMapping("/{id}")
@@ -86,3 +78,4 @@ public class ContentController {
         return ResponseEntity.noContent().build();
     }
 }
+

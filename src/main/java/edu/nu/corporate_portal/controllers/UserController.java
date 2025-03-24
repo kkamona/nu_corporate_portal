@@ -1,5 +1,8 @@
 package edu.nu.corporate_portal.controllers;
 
+import edu.nu.corporate_portal.DTO.User.UserGetDTO;
+import edu.nu.corporate_portal.DTO.User.UserPatchDTO;
+import edu.nu.corporate_portal.DTO.User.UserPostDTO;
 import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,39 +23,48 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserGetDTO>> getAllUsers() {
+        List<UserGetDTO> users = userService.getAllUsers()
+                .stream()
+                .map(UserGetDTO::new)
+                .toList();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserGetDTO> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
+                .map(UserGetDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<UserGetDTO> getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email)
+                .map(UserGetDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+    public ResponseEntity<UserGetDTO> getUserByUsername(@PathVariable String username) {
         return userService.getUserByUsername(username)
+                .map(UserGetDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<UserGetDTO> createUser(@RequestBody UserPostDTO dto) {
+        User created = userService.createUser(dto);
+        return ResponseEntity.ok(new UserGetDTO(created));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        return ResponseEntity.ok(userService.updateUser(id, updatedUser));
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserGetDTO> updateUser(@PathVariable Long id, @RequestBody UserPatchDTO dto) {
+        User updated = userService.updateUser(id, dto);
+        return ResponseEntity.ok(new UserGetDTO(updated));
     }
 
     @DeleteMapping("/{id}")

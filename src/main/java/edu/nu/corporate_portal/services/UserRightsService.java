@@ -1,5 +1,6 @@
 package edu.nu.corporate_portal.services;
 
+import edu.nu.corporate_portal.DTO.UserRights.UserRightsUpdateDTO;
 import edu.nu.corporate_portal.models.UserRights;
 import edu.nu.corporate_portal.repository.UserRightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,14 @@ public class UserRightsService {
         return userRightsRepository.save(userRights);
     }
 
-    public UserRights updateUserRights(Long userId, UserRights updatedRights) {
+    public UserRights updateUserRights(Long userId, UserRightsUpdateDTO updatedRightsDTO) {
         UserRights existingRights = getUserRightsByUserId(userId);
-        existingRights.setAssignedRole(updatedRights.getAssignedRole());
-        existingRights.setCanEditCalendar(updatedRights.getCanEditCalendar());
-        existingRights.setCanManageUsers(updatedRights.getCanManageUsers());
-        existingRights.setCanViewStaffInfo(updatedRights.getCanViewStaffInfo());
-        existingRights.setCanViewStudentInfo(updatedRights.getCanViewStudentInfo());
-        existingRights.setPermissions(updatedRights.getPermissions());
+        existingRights.setAssignedRole(updatedRightsDTO.getAssignedRole());
+        existingRights.setCanEditCalendar(updatedRightsDTO.getCanEditCalendar());
+        existingRights.setCanManageUsers(updatedRightsDTO.getCanManageUsers());
+        existingRights.setCanViewStaffInfo(updatedRightsDTO.getCanViewStaffInfo());
+        existingRights.setCanViewStudentInfo(updatedRightsDTO.getCanViewStudentInfo());
+        existingRights.setPermissions(updatedRightsDTO.getPermissions());
         return userRightsRepository.save(existingRights);
     }
 

@@ -1,6 +1,7 @@
 package edu.nu.corporate_portal.models;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -95,8 +96,8 @@ public class User {
         LOCAL, AZURE
     }
 
-    // Constructors
-    public User() {}
+    public User() {
+    }
 
     public User(String email, String username, String passwordHash, Role role) {
         this.email = email;
@@ -105,7 +106,6 @@ public class User {
         this.role = role;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

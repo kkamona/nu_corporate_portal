@@ -1,6 +1,7 @@
 package edu.nu.corporate_portal.models;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,7 +30,7 @@ public class Phonebook {
     private String department;
 
     @Column(name = "type", nullable = false, length = 50)
-    private String type; // e.g., "emergency_contact", "service_provider", "reference"
+    private String type;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -37,10 +38,9 @@ public class Phonebook {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    // Default constructor
-    public Phonebook() {}
+    public Phonebook() {
+    }
 
-    // Parameterized constructor
     public Phonebook(User user, String name, String phoneNumber, String email, String department, String type) {
         this.user = user;
         this.name = name;
@@ -52,7 +52,6 @@ public class Phonebook {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
 
     public Long getId() {
         return id;

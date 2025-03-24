@@ -1,5 +1,7 @@
 package edu.nu.corporate_portal.controllers;
 
+import edu.nu.corporate_portal.DTO.UserRights.UserRightsGetDTO;
+import edu.nu.corporate_portal.DTO.UserRights.UserRightsUpdateDTO;
 import edu.nu.corporate_portal.models.UserRights;
 import edu.nu.corporate_portal.services.UserRightsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,20 @@ public class UserRightsController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserRights> getUserRights(@PathVariable Long userId) {
-        return ResponseEntity.ok(userRightsService.getUserRightsByUserId(userId));
+    public ResponseEntity<UserRightsGetDTO> getUserRights(@PathVariable Long userId) {
+        UserRights rights = userRightsService.getUserRightsByUserId(userId);
+        UserRightsGetDTO dto = new UserRightsGetDTO(rights);
+        return ResponseEntity.ok(dto);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<UserRights> updateUserRights(@PathVariable Long userId, @RequestBody UserRights updatedRights) {
-        return ResponseEntity.ok(userRightsService.updateUserRights(userId, updatedRights));
+    @PatchMapping("/{userId}")
+    public ResponseEntity<UserRightsGetDTO> updateUserRights(
+            @PathVariable Long userId,
+            @RequestBody UserRightsUpdateDTO updatedRightsDTO) {
+
+        UserRights rights = userRightsService.updateUserRights(userId, updatedRightsDTO);
+        UserRightsGetDTO dto = new UserRightsGetDTO(rights);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{userId}")

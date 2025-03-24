@@ -42,7 +42,7 @@ public class NuCalendarController {
         return ResponseEntity.ok(nuCalendarService.createEvent(event));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<NuCalendar> updateEvent(@PathVariable Long id, @RequestBody NuCalendar event) {
         return ResponseEntity.ok(nuCalendarService.updateEvent(id, event));
     }
