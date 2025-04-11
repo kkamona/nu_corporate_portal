@@ -31,20 +31,16 @@ public class UserGetDTO {
     public UserGetDTO(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
-        this.username = user.getUsername();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.contactInfo = user.getContactInfo();
-        this.profilePicture = user.getProfilePicture();
         this.dateOfBirth = user.getDateOfBirth();
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
         this.azureSsoId = user.getAzureSsoId();
         this.authenticationProvider = user.getAuthenticationProvider().name();
-        this.year = user.getYear();
         this.school = user.getSchool() != null ? user.getSchool().name() : null;
         this.major = user.getMajor();
-        this.department = user.getDepartment();
         this.role = user.getRole().name();
     }
 }

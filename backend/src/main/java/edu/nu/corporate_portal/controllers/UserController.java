@@ -1,13 +1,13 @@
 package edu.nu.corporate_portal.controllers;
 
 import edu.nu.corporate_portal.DTO.User.UserGetDTO;
-import edu.nu.corporate_portal.DTO.User.UserPatchDTO;
-import edu.nu.corporate_portal.DTO.User.UserPostDTO;
-import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -45,37 +45,5 @@ public class UserController {
                 .map(UserGetDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/username/{username}")
-    public ResponseEntity<UserGetDTO> getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username)
-                .map(UserGetDTO::new)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public ResponseEntity<UserGetDTO> createUser(@RequestBody UserPostDTO dto) {
-        User created = userService.createUser(dto);
-        return ResponseEntity.ok(new UserGetDTO(created));
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<UserGetDTO> updateUser(@PathVariable Long id, @RequestBody UserPatchDTO dto) {
-        User updated = userService.updateUser(id, dto);
-        return ResponseEntity.ok(new UserGetDTO(updated));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/email/{email}")
-    public ResponseEntity<Void> deleteUserByEmail(@PathVariable String email) {
-        userService.deleteUserByEmail(email);
-        return ResponseEntity.noContent().build();
     }
 }
