@@ -5,71 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="45a57874-5ea3-488f-9905-afb2c7d4d87a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/CorporatePortalApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/BirthdayWidget/BirthdayWidgetGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/BirthdayWidget/BirthdayWidgetPatchDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/BirthdayWidget/BirthdayWidgetPostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/Content/ContentGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/Content/ContentPatchDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/Content/ContentPostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/News/NewsGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/News/NewsPatchDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/News/NewsPostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/Phonebook/PhonebookGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/Phonebook/PhonebookPatchDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/Phonebook/PhonebookPostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/User/UserGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/User/UserPatchDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/User/UserPostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/UserProfile/UserProfileGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/UserProfile/UserProfilePatchDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/UserProfile/UserProfilePostDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/UserRights/UserRightsGetDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/DTO/UserRights/UserRightsUpdateDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/configs/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/BirthdayWidgetController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/ContentController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/NewsController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/NuCalendarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/PhonebookController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/UserProfileController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/controllers/UserRightsController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/BirthdayWidget.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/Content.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/ContentType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/ContentTypeConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/News.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/NuCalendar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/PermissionsConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/Phonebook.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/UserProfile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/models/UserRights.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/BirthdayWidgetRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/ContentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/NewsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/NuCalendarRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/PhonebookRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/UserProfileRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/repository/UserRightsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/BirthdayWidgetService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/ContentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/NewsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/NuCalendarService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/PhonebookService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/UserProfileService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/UserRightsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/nu/corporate_portal/services/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/nu/corporate_portal/CorporatePortalApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,30 +43,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.CorporatePortalApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/a/dev/uni/nu_corporate_portal/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CorporatePortalApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/alibekubaidullayev/dev/uni/nu_corporate_portal&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend" />
@@ -159,8 +95,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -177,6 +113,7 @@
       <workItem from="1742099381683" duration="7114000" />
       <workItem from="1742796718985" duration="16936000" />
       <workItem from="1742924130256" duration="600000" />
+      <workItem from="1744384119361" duration="36000" />
     </task>
     <servers />
   </component>

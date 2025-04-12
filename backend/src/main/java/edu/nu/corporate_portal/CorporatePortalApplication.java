@@ -6,11 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(
-        exclude = {
-                com.azure.spring.cloud.autoconfigure.implementation.context.AzureTokenCredentialAutoConfiguration.class
-        }
-)
+@SpringBootApplication
 public class CorporatePortalApplication {
 
     public static void main(String[] args) {
