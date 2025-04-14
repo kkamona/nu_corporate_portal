@@ -1,4 +1,4 @@
-package edu.nu.corporate_portal.controller;
+package edu.nu.corporate_portal.controllers;
 
 import edu.nu.corporate_portal.DTO.Content.ContentGetDTO;
 import edu.nu.corporate_portal.DTO.Content.ContentPatchDTO;

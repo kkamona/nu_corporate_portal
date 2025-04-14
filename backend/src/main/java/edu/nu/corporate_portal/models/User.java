@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 @Getter
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -42,15 +41,6 @@ public class User {
     private LocalDate dateOfBirth;
 
     @Setter
-    @Column(name = "azure_sso_id", unique = true)
-    private String azureSsoId;
-
-    @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(name = "authentication_provider", nullable = false)
-    private AuthenticationProvider authenticationProvider = AuthenticationProvider.AZURE;
-
-    @Setter
     @Enumerated(EnumType.STRING)
     private School school;
 
@@ -61,6 +51,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Setter
+    @Column(name = "hashed_password", nullable = false)
+    private String hashedPassword;
+
+    @Setter
+    @Column(name = "profile_picture")
+    private String profilePicture;
+
+    @Setter
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -83,11 +85,6 @@ public class User {
     public enum School {
         SEDS, SSH, SMG, NUSOM, NUFYP, GSB, GSPP, GSE
     }
-
-    public enum AuthenticationProvider {
-        AZURE
-    }
-
 
     @Override
     public String toString() {

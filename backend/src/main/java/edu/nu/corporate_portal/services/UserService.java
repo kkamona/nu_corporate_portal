@@ -1,7 +1,6 @@
 package edu.nu.corporate_portal.services;
 
 import edu.nu.corporate_portal.models.User;
-import edu.nu.corporate_portal.models.User.AuthenticationProvider;
 import edu.nu.corporate_portal.models.User.Role;
 import edu.nu.corporate_portal.models.User.School;
 import edu.nu.corporate_portal.repository.UserRepository;
@@ -34,21 +33,15 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Optional<User> findByOid(String oid) {
-        return userRepository.findByAzureSsoId(oid);
-    }
-
     public User createAzureUser(String oid, String email, String fullName, String role,
                                 String school, String phoneNumber, String major, String birthday) {
 
         User user = new User();
-        user.setAzureSsoId(oid);
         user.setEmail(email);
         user.setFirstName(getFirstName(fullName));
         user.setLastName(getLastName(fullName));
         user.setContactInfo(phoneNumber);
         user.setMajor(major);
-        user.setAuthenticationProvider(AuthenticationProvider.AZURE);
         user.setSchool(school != null ? School.valueOf(school.toUpperCase()) : null);
         user.setRole(Role.valueOf(role.toUpperCase()));
         user.setDateOfBirth(LocalDate.parse(birthday));

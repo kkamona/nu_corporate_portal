@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class UserGetDTO {
     private Long id;
     private String email;
-    private String username;
     private String firstName;
     private String lastName;
     private String contactInfo;
@@ -20,12 +19,8 @@ public class UserGetDTO {
     private LocalDate dateOfBirth;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String azureSsoId;
-    private String authenticationProvider;
-    private Integer year;
     private String school;
     private String major;
-    private String department;
     private String role;
 
     public UserGetDTO(User user) {
@@ -34,13 +29,12 @@ public class UserGetDTO {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.contactInfo = user.getContactInfo();
+        this.profilePicture = user.getProfilePicture();
         this.dateOfBirth = user.getDateOfBirth();
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
-        this.azureSsoId = user.getAzureSsoId();
-        this.authenticationProvider = user.getAuthenticationProvider().name();
         this.school = user.getSchool() != null ? user.getSchool().name() : null;
         this.major = user.getMajor();
-        this.role = user.getRole().name();
+        this.role = user.getRole() != null ? user.getRole().name() : null;
     }
 }

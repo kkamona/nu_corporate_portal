@@ -1,4 +1,4 @@
-package edu.nu.corporate_portal.DTO.User;
+package edu.nu.corporate_portal.DTO.Auth;
 
 import edu.nu.corporate_portal.models.User;
 import lombok.Data;
@@ -6,20 +6,16 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class UserPostDTO {
+public class RegistrationDTO {
     private String email;
-    private String username;
-    private String passwordHash;
+    private String password;
     private String firstName;
     private String lastName;
     private String contactInfo;
-    private String profilePicture;
     private LocalDate dateOfBirth;
-    private String azureSsoId;
-    private User.AuthenticationProvider authenticationProvider;
-    private Integer year;
     private User.School school;
     private String major;
-    private String department;
     private User.Role role;
+    private String azureSsoId;
+    private String profilePicture;
 }
