@@ -16,6 +16,5 @@ public class RegistrationDTO {
     private User.School school;
     private String major;
     private User.Role role;
-    private String azureSsoId;
     private String profilePicture;
 }
