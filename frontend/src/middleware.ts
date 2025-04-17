@@ -1,40 +1,36 @@
-import { auth } from "@/auth";
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-const protectedRoutes = ["/dashboard", "/profile"];
-const authPageRoutes = ["/login"];
-const apiAuthPrefix = "/api/auth";
+// Define which routes require authentication
+// const protectedRoutes = ["/admin", "/profile", "/settings"]
+const protectedRoutes = ["/", "/profile", "/admin"]
 
-export default auth(async (req) => {
-    const { nextUrl } = req;
-    const isLoggedIn = !!req.auth;
 
-    const path = nextUrl.pathname;
-    const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-    const isProtectedRoute = protectedRoutes.includes(path);
-    const isAuthPageRoute = authPageRoutes.includes(path);
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("auth-token")?.value
+  const { pathname } = request.nextUrl
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log({ auth: req.auth });
-    }
+  // Check if the route requires authentication
+  const isProtectedRoute = protectedRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`))
 
-    if (isApiAuthRoute) {
-        return NextResponse.next();
-    }
+  // If it's a protected route and there's no token, redirect to login
+  if (isProtectedRoute && !token) {
+    const url = new URL("/login", request.url)
+    // Add the current path as a "next" parameter to redirect after login
+    url.searchParams.set("next", pathname)
+    return NextResponse.redirect(url)
+  }
 
-    if (isProtectedRoute && !isLoggedIn) {
-        const returnUrl = encodeURIComponent(nextUrl.pathname);
-        return NextResponse.redirect(new URL(`/login?returnUrl=${returnUrl}`, req.nextUrl));
-    }
+  // If it's the login page and there's a token, redirect to dashboard
+  if ((pathname === "/login" || pathname === "/register") && token) {
+    return NextResponse.redirect(new URL("/", request.url))
+  }
 
-    if (isLoggedIn && isAuthPageRoute) {
-        return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-    }
+  return NextResponse.next()
+}
 
-    return NextResponse.next();
-});
-
-// Optionally, don't invoke Middleware on some paths
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-};
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|public).*)",
+  ],
+}

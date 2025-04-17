@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   env: {
     SERVER_URL: process.env.SERVER_URL,
+    APP_URL: process.env.APP_URL,
 
     AUTH_SECRET: process.env.AUTH_SECRET,
 
@@ -14,6 +15,7 @@ const nextConfig: NextConfig = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
 
   }
+
 };
 
 export default nextConfig;
