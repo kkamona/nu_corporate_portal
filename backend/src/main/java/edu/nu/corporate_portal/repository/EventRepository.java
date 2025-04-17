@@ -1,6 +1,6 @@
 package edu.nu.corporate_portal.repository;
 
-import edu.nu.corporate_portal.models.News;
+import edu.nu.corporate_portal.models.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface NewsRepository extends JpaRepository<News, Long> {
-    List<News> findByUserId(Long userId);
-    List<News> findByPublishedDate(LocalDate date);
+public interface EventRepository extends JpaRepository<Event, Long> {
+    List<Event> findByStartDateBetween(LocalDate from, LocalDate to);
 }
