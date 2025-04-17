@@ -1,11 +1,14 @@
 package edu.nu.corporate_portal.services;
 
+import edu.nu.corporate_portal.DTO.User.UserPatchDTO;
 import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.models.User.Role;
 import edu.nu.corporate_portal.models.User.School;
 import edu.nu.corporate_portal.repository.UserRepository;
 import edu.nu.corporate_portal.security.JwtUtil;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -13,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,18 +44,22 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User getCurrentUser() {
-        Authentication auth = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
+    @Transactional
+    public User updateUser(Long id, UserPatchDTO dto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        if (auth == null || !auth.isAuthenticated() ||
-                auth instanceof AnonymousAuthenticationToken) {
-            throw new AccessDeniedException("No authenticated user");
-        }
 
-        String email = auth.getName(); // that's the JWT subject we mapped
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
+        if (dto.getPasswordHash() != null) user.setHashedPassword(dto.getPasswordHash());
+        if (dto.getFirstName() != null) user.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null) user.setLastName(dto.getLastName());
+        if (dto.getContactInfo() != null) user.setContactInfo(dto.getContactInfo());
+        if (dto.getProfilePicture() != null) user.setProfilePicture(dto.getProfilePicture());
+        if (dto.getDateOfBirth() != null) user.setDateOfBirth(dto.getDateOfBirth());
+        if (dto.getSchool() != null) user.setSchool(dto.getSchool());
+        if (dto.getMajor() != null) user.setMajor(dto.getMajor());
+        if (dto.getRole() != null) user.setRole(dto.getRole());
+
+        return userRepository.save(user);
     }
 }

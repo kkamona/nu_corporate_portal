@@ -14,7 +14,6 @@ public class UserPatchDTO {
     private String contactInfo;
     private String profilePicture;
     private LocalDate dateOfBirth;
-    private String azureSsoId;
     private User.School school;
     private String major;
     private User.Role role;

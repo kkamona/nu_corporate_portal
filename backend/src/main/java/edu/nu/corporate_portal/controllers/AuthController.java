@@ -21,17 +21,10 @@ import java.util.Collections;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private AuthenticationManager authenticationManager;
+    @Autowired private JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationDTO registrationDTO) {
@@ -49,24 +42,23 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-        System.out.println("LOGIN: Received login request for email: " + loginDTO.getEmail());
         try {
-            System.out.println("LOGIN: Attempting authentication for email: " + loginDTO.getEmail());
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword())
+                    new UsernamePasswordAuthenticationToken(
+                            loginDTO.getEmail(),
+                            loginDTO.getPassword()
+                    )
             );
-            System.out.println("LOGIN: Authentication successful: " + authentication);
 
-            String token = jwtUtil.generateToken(loginDTO.getEmail());
-            System.out.println("LOGIN: JWT token generated: " + token);
+            // load User so we have the ID
+            User user = userRepository.findByEmail(loginDTO.getEmail())
+                    .orElseThrow();
+
+            String token = jwtUtil.generateToken(user);
 
             return ResponseEntity.ok(Collections.singletonMap("token", token));
         } catch (BadCredentialsException ex) {
-            System.out.println("LOGIN: Authentication failed due to bad credentials for email: " + loginDTO.getEmail());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        } catch (Exception ex) {
-            System.out.println("LOGIN: An unexpected error occurred for email: " + loginDTO.getEmail());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error");
         }
     }
 
