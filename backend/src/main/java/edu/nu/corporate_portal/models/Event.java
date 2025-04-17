@@ -59,7 +59,7 @@ public class Event {
     }
 
     public enum School {
-        SEDS, SSH, SMG, NUSOM, NUFYP, GSB, GSPP, GSE
+        SEDS, SSH, SMG, NUSOM, CPS, GSB, GSPP, GSE
     }
 
     public void applyPatch(EventPatchDTO dto) {
