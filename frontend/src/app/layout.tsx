@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { SessionProvider } from 'next-auth/react'
 import { Inter, Prata } from 'next/font/google'
-import './global.css'
 
-import { auth } from '@/auth'
+import './globals.css'
+import ToastProvider from '@/components/providers/ToastProvider'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -28,16 +27,13 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const session = await auth()
 	return (
-		<SessionProvider session={session}>
-			<html lang='en'>
-				<body
-					className={`${inter.variable} ${prata.variable} font-sans antialiased`}
-				>
-					{children}
-				</body>
-			</html>
-		</SessionProvider>
+		<html lang='en'>
+			<body
+				className={`${inter.variable} ${prata.variable} font-sans antialiased`}
+			>
+				<ToastProvider>{children}</ToastProvider>
+			</body>
+		</html>
 	)
 }

@@ -1,4 +1,5 @@
-import LoginButton from './LoginButton'
+import LoginForm from '@/components/login_page/LoginForm'
+import { Card, CardHeader } from '@/components/ui/card'
 
 export default async function LoginPage() {
 	return (
@@ -10,8 +11,8 @@ export default async function LoginPage() {
 				backgroundPosition: 'center'
 			}}
 		>
-			<div className='absolute inset-0 bg-black/40' />
-			<div className='relative z-10 mx-auto w-full max-w-md rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md'>
+			{/* <div className='absolute inset-0 bg-black/40' /> */}
+			{/* <div className='relative z-10 mx-auto w-full max-w-md rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md'>
 				<div className='text-center'>
 					<h1 className='text-3xl font-bold'>
 						Sign in to your account
@@ -21,7 +22,8 @@ export default async function LoginPage() {
 					</p>
 				</div>
 				<LoginButton />
-			</div>
+			</div> */}
+			<LoginForm />
 		</div>
 	)
 }
