@@ -1,5 +1,6 @@
 package edu.nu.corporate_portal.models;
 
+import edu.nu.corporate_portal.DTO.Auth.RegistrationDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
         @UniqueConstraint(name = "unique_azure_sso_id", columnNames = "azure_sso_id")
 })
 public class User {
-
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,4 +97,18 @@ public class User {
                 ", school=" + school +
                 '}';
     }
+
+    public void fromDto(RegistrationDTO registrationDTO, String hashedPassword) {
+        this.email = registrationDTO.getEmail();
+        this.firstName = registrationDTO.getFirstName();
+        this.lastName = registrationDTO.getLastName();
+        this.contactInfo = registrationDTO.getContactInfo();
+        this.dateOfBirth = registrationDTO.getDateOfBirth();
+        this.school = registrationDTO.getSchool();
+        this.major = registrationDTO.getMajor();
+        this.role = registrationDTO.getRole();
+        this.profilePicture = registrationDTO.getProfilePicture();
+        this.hashedPassword = hashedPassword;
+    }
+
 }

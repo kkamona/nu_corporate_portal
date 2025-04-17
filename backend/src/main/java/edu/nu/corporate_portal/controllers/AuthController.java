@@ -39,19 +39,10 @@ public class AuthController {
         if (userRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already in use");
         }
-        User user = new User();
-        user.setEmail(registrationDTO.getEmail());
-        user.setFirstName(registrationDTO.getFirstName());
-        user.setLastName(registrationDTO.getLastName());
-        user.setContactInfo(registrationDTO.getContactInfo());
-        user.setDateOfBirth(registrationDTO.getDateOfBirth());
-        user.setSchool(registrationDTO.getSchool());
-        user.setMajor(registrationDTO.getMajor());
-        user.setRole(registrationDTO.getRole());
-        user.setProfilePicture(registrationDTO.getProfilePicture());
-        user.setHashedPassword(passwordEncoder.encode(registrationDTO.getPassword()));
-        user.setRefreshToken(null);
 
+        User user = new User();
+        String hashedPassword = passwordEncoder.encode(registrationDTO.getPassword());
+        user.fromDto(registrationDTO, hashedPassword);
         userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
     }

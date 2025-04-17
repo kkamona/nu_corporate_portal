@@ -1,11 +1,10 @@
 package edu.nu.corporate_portal.controllers;
 
 import edu.nu.corporate_portal.DTO.User.UserGetDTO;
+import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,18 +40,10 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<UserGetDTO> getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email)
-                .map(UserGetDTO::new)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/api/user")
-    public ResponseEntity<String> user(@AuthenticationPrincipal Jwt jwt) {
-        String email = jwt.getClaim("preferred_username");
-        return ResponseEntity.ok("Hello " + email);
+    @GetMapping("/me")
+    public ResponseEntity<UserGetDTO> getCurrentUser() {
+        User me = userService.getCurrentUser();
+        return ResponseEntity.ok(new UserGetDTO(me));
     }
 
 }

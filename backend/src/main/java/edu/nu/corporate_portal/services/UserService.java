@@ -4,7 +4,14 @@ import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.models.User.Role;
 import edu.nu.corporate_portal.models.User.School;
 import edu.nu.corporate_portal.repository.UserRepository;
+import edu.nu.corporate_portal.security.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -33,29 +40,18 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User createAzureUser(String oid, String email, String fullName, String role,
-                                String school, String phoneNumber, String major, String birthday) {
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
 
-        User user = new User();
-        user.setEmail(email);
-        user.setFirstName(getFirstName(fullName));
-        user.setLastName(getLastName(fullName));
-        user.setContactInfo(phoneNumber);
-        user.setMajor(major);
-        user.setSchool(school != null ? School.valueOf(school.toUpperCase()) : null);
-        user.setRole(Role.valueOf(role.toUpperCase()));
-        user.setDateOfBirth(LocalDate.parse(birthday));
+        if (auth == null || !auth.isAuthenticated() ||
+                auth instanceof AnonymousAuthenticationToken) {
+            throw new AccessDeniedException("No authenticated user");
+        }
 
-        return userRepository.save(user);
+        String email = auth.getName(); // that's the JWT subject we mapped
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
     }
-
-    private String getFirstName(String fullName) {
-        return fullName.split(" ")[0];
-    }
-
-    private String getLastName(String fullName) {
-        int index = fullName.indexOf(" ");
-        return index == -1 ? "" : fullName.substring(index + 1);
-    }
-
 }

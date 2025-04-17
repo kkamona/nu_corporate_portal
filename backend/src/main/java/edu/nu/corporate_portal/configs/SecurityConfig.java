@@ -24,7 +24,7 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    @Value("${jwt.secret}")
+    @Value(value = "${jwt.secret}")
     private String jwtSecret;
 
     @Bean
@@ -33,16 +33,15 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(
-                                        "/swagger-ui/**",
-                                        "/v3/api-docs/**",
-                                        "/auth/**")
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/auth/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
                 .oauth2ResourceServer(
-                        oauth2 ->
-                                oauth2
-                                        .jwt(jwt -> jwt.decoder(jwtDecoder)));
+                        oauth2 -> oauth2
+                                .jwt(jwt -> jwt.decoder(jwtDecoder)));
 
         return http.build();
     }
@@ -52,7 +51,6 @@ public class SecurityConfig {
         byte[] secretBytes = jwtSecret.getBytes();
         return NimbusJwtDecoder.withSecretKey(new SecretKeySpec(secretBytes, "HmacSHA256")).build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -75,5 +73,4 @@ public class SecurityConfig {
                     .build();
         };
     }
-
 }
