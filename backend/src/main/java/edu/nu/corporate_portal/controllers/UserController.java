@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -56,8 +57,9 @@ public class UserController {
     )
     public ResponseEntity<UserGetDTO> patchUser(
             @PathVariable Long id,
-            @RequestBody UserPatchDTO patchDTO) {
+            @RequestBody UserPatchDTO patchDTO) throws IOException {
         User updated = userService.updateUser(id, patchDTO);
         return ResponseEntity.ok(new UserGetDTO(updated));
     }
+
 }

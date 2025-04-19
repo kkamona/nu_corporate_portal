@@ -1,31 +1,25 @@
 package edu.nu.corporate_portal.DTO.Content;
 
-import edu.nu.corporate_portal.models.Content;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
-@AllArgsConstructor
+@Getter
 public class ContentGetDTO {
     private Long id;
     private Long userId;
-    private String type;
-    private String fileUrl;
     private String title;
-    private String contentText;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String text;
+    private String mainPhotoUrl;
+    private List<String> attachments;
 
-    public ContentGetDTO(Content content) {
-        this.id = content.getId();
-        this.userId = content.getUser().getId();
-        this.type = content.getType().name();
-        this.fileUrl = content.getFileUrl();
-        this.title = content.getTitle();
-        this.contentText = content.getContentText();
-        this.createdAt = content.getCreatedAt();
-        this.updatedAt = content.getUpdatedAt();
+    public ContentGetDTO(Long id, Long userId, String title, String text,
+                         String mainPhotoUrl, List<String> attachments) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.mainPhotoUrl = mainPhotoUrl;
+        this.attachments = attachments;
     }
+
 }

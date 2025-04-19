@@ -12,9 +12,10 @@ public class UserPatchDTO {
     private String firstName;
     private String lastName;
     private String contactInfo;
-    private String profilePicture;
+    private String profilePictureBase64;
     private LocalDate dateOfBirth;
     private User.School school;
     private String major;
     private User.Role role;
+
 }

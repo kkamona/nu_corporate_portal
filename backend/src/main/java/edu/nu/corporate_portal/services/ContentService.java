@@ -1,81 +1,121 @@
 package edu.nu.corporate_portal.services;
 
-import edu.nu.corporate_portal.DTO.Content.ContentPatchDTO;
 import edu.nu.corporate_portal.DTO.Content.ContentPostDTO;
+import edu.nu.corporate_portal.DTO.Content.ContentGetDTO;
 import edu.nu.corporate_portal.models.Content;
-import edu.nu.corporate_portal.models.ContentType;
 import edu.nu.corporate_portal.models.User;
 import edu.nu.corporate_portal.repository.ContentRepository;
 import edu.nu.corporate_portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
+@Service("contentService")
 public class ContentService {
 
-    private final ContentRepository contentRepository;
-    private final UserRepository userRepository;
+    private final ContentRepository contentRepo;
+    private final UserRepository userRepo;
+    private final AzureBlobStorageService storage;
 
     @Autowired
-    public ContentService(ContentRepository contentRepository, UserRepository userRepository) {
-        this.contentRepository = contentRepository;
-        this.userRepository = userRepository;
+    public ContentService(
+            ContentRepository contentRepo,
+            UserRepository userRepo,
+            AzureBlobStorageService storage
+    ) {
+        this.contentRepo = contentRepo;
+        this.userRepo = userRepo;
+        this.storage = storage;
     }
 
-    public List<Content> getAllContent() {
-        return contentRepository.findAll();
-    }
+    public ContentGetDTO createContent(
+            ContentPostDTO dto,
+            MultipartFile mainPhoto,
+            List<MultipartFile> attachments,
+            Long userId
+    ) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-    public Content getContentById(Long id) {
-        return contentRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found"));
-    }
-
-    public List<Content> getContentByUserId(Long userId) {
-        return contentRepository.findByUserId(userId);
-    }
-
-    public List<Content> getContentByType(ContentType type) {
-        return contentRepository.findByType(type);
-    }
-
-    public Content createContent(ContentPostDTO dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        String mainUrl = storage.uploadFile(mainPhoto);
+        List<String> attachUrls = attachments.stream()
+                .filter(f -> !f.isEmpty())
+                .map(storage::uploadFile)
+                .collect(Collectors.toList());
 
         Content content = new Content();
-        content.setUser(user);
-        content.setType(dto.getType());
-        content.setFileUrl(dto.getFileUrl());
         content.setTitle(dto.getTitle());
-        content.setContentText(dto.getContentText());
-        content.setCreatedAt(LocalDateTime.now());
-        content.setUpdatedAt(LocalDateTime.now());
+        content.setText(dto.getText());
+        content.setMainPhotoUrl(mainUrl);
+        content.setAttachments(attachUrls);
+        content.setUser(user);
 
-        return contentRepository.save(content);
+        Content saved = contentRepo.save(content);
+        return mapToGetDTO(saved);
     }
 
-    public Content updateContent(Long id, ContentPatchDTO dto) {
-        Content content = getContentById(id);
+    public ContentGetDTO getContent(Long id) {
+        return mapToGetDTO(findById(id));
+    }
 
-        if (dto.getType() != null) {
-            content.setType(dto.getType());
+    public List<ContentGetDTO> listContents() {
+        return contentRepo.findAll()
+                .stream()
+                .map(this::mapToGetDTO)
+                .collect(Collectors.toList());
+    }
+
+    public ContentGetDTO updateContent(
+            Long id,
+            ContentPostDTO dto,
+            MultipartFile mainPhoto,
+            List<MultipartFile> attachments
+    ) {
+        Content content = findById(id);
+
+        if (dto.getTitle() != null) {
+            content.setTitle(dto.getTitle());
         }
-        if (dto.getFileUrl() != null) content.setFileUrl(dto.getFileUrl());
-        if (dto.getTitle() != null) content.setTitle(dto.getTitle());
-        if (dto.getContentText() != null) content.setContentText(dto.getContentText());
+        if (dto.getText() != null) {
+            content.setText(dto.getText());
+        }
+        if (mainPhoto != null && !mainPhoto.isEmpty()) {
+            content.setMainPhotoUrl(storage.uploadFile(mainPhoto));
+        }
+        if (attachments != null && !attachments.isEmpty()) {
+            List<String> newUrls = attachments.stream()
+                    .filter(f -> !f.isEmpty())
+                    .map(storage::uploadFile)
+                    .collect(Collectors.toList());
+            content.setAttachments(newUrls);
+        }
 
-        content.setUpdatedAt(LocalDateTime.now());
-        return contentRepository.save(content);
+        Content updated = contentRepo.save(content);
+        return mapToGetDTO(updated);
     }
 
     public void deleteContent(Long id) {
-        Content content = getContentById(id);
-        contentRepository.delete(content);
+        findById(id);
+        contentRepo.deleteById(id);
+    }
+
+
+    private Content findById(Long id) {
+        return contentRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Content not found: " + id));
+    }
+
+    private ContentGetDTO mapToGetDTO(Content c) {
+        return new ContentGetDTO(
+                c.getId(),
+                c.getUser().getId(),
+                c.getTitle(),
+                c.getText(),
+                c.getMainPhotoUrl(),
+                c.getAttachments()
+        );
     }
 }

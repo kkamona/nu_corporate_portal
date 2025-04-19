@@ -9,6 +9,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Data
@@ -18,7 +19,6 @@ public class EventPostDTO {
     private String title;
 
     private String description;
-
     private String location;
 
     @NotNull
@@ -32,9 +32,16 @@ public class EventPostDTO {
     private LocalDate endDate;
 
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime startTime;
+
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime endTime;
+
+    @NotNull
     private Boolean isPublic = Boolean.TRUE;
 
     private Set<Role> targetRoles;
-
     private Set<School> targetSchools;
 }
