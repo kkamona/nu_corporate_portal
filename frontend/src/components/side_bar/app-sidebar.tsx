@@ -1,49 +1,114 @@
+import {
+	BookOpen,
+	Bot,
+	Calendar,
+	ChevronRight,
+	Settings2,
+	SquareTerminal
+} from 'lucide-react'
+import Image from 'next/image'
+
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger
+} from '../ui/collapsible'
+
 import SidebarFooterContent from './SidebarFooter'
+import { NavMain } from './nav-main'
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
 	SidebarGroup,
+	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
-	SidebarMenuItem
+	SidebarMenuItem,
+	SidebarMenuSub,
+	SidebarMenuSubButton,
+	SidebarMenuSubItem
 } from '@/components/ui/sidebar'
 import { serverFetch } from '@/lib/api'
 import { UserType } from '@/types/user/user.type'
 
 export async function AppSidebar() {
-	// const user: UserType = {
-	// 	id: 1,
-	// 	email: 'john.doe@example.com',
-	// 	username: 'johndoe',
-	// 	firstName: 'John',
-	// 	lastName: 'Doe',
-	// 	contactInfo: '+1234567890',
-	// 	profilePicture:
-	// 		'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
-	// 	dateOfBirth: '2000-05-20',
-	// 	createdAt: '2025-04-14T06:19:48.819Z',
-	// 	updatedAt: '2025-04-14T06:19:48.819Z',
-	// 	azureSsoId: 'abc123xyz',
-	// 	authenticationProvider: 'azure',
-	// 	year: 3,
-	// 	school: 'School of Engineering',
-	// 	major: 'Computer Science',
-	// 	department: 'Software Engineering',
-	// 	role: 'student'
-	// }
 	const response = serverFetch('/users/me', {
 		method: 'GET'
 	})
 	const user = await (await response).json()
 
+	const items = [
+		{
+			title: 'Events',
+			isActive: true,
+			url: '#',
+			icon: Calendar,
+			items: [
+				{ title: 'Create Event', url: '/admin/events/create' },
+				{
+					title: 'List Events',
+					url: '/admin/events'
+				}
+			]
+		}
+	]
+
 	return (
 		<Sidebar>
-			<SidebarHeader />
+			<SidebarHeader className='relative h-[100px]'>
+				<Image
+					src={'/NU horizontal.png'}
+					alt='Logo image'
+					fill
+					className='object-cover object-[center_50%]'
+					sizes='200px'
+				/>
+			</SidebarHeader>
 			<SidebarContent>
-				<SidebarGroup />
-				<SidebarGroup />
+				<SidebarGroup>
+					<SidebarGroupLabel>Platform</SidebarGroupLabel>
+					<SidebarMenu>
+						{items.map(item => (
+							<Collapsible
+								key={item.title}
+								asChild
+								defaultOpen={item.isActive}
+								className='group/collapsible'
+							>
+								<SidebarMenuItem>
+									<CollapsibleTrigger asChild>
+										<SidebarMenuButton tooltip={item.title}>
+											{item.icon && <item.icon />}
+											<span>{item.title}</span>
+											<ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+										</SidebarMenuButton>
+									</CollapsibleTrigger>
+									<CollapsibleContent>
+										<SidebarMenuSub>
+											{item.items?.map(subItem => (
+												<SidebarMenuSubItem
+													key={subItem.title}
+												>
+													<SidebarMenuSubButton
+														asChild
+													>
+														<a href={subItem.url}>
+															<span>
+																{subItem.title}
+															</span>
+														</a>
+													</SidebarMenuSubButton>
+												</SidebarMenuSubItem>
+											))}
+										</SidebarMenuSub>
+									</CollapsibleContent>
+								</SidebarMenuItem>
+							</Collapsible>
+						))}
+					</SidebarMenu>
+				</SidebarGroup>
 			</SidebarContent>
 			<SidebarFooter>
 				<SidebarFooterContent user={user} />

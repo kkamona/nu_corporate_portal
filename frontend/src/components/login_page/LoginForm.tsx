@@ -63,7 +63,7 @@ const LoginForm = () => {
 
 						<Input
 							name='email'
-							type='email'
+							// type='email'
 							placeholder='example@nu.edu.kz'
 						/>
 					</div>

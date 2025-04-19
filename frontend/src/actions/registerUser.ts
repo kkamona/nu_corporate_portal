@@ -5,19 +5,26 @@ import { fromErrorToFormState, toFormState } from "@/utils/to-form-state"
 import { cookies } from "next/headers";
 import { z } from 'zod'
 
-const registerUserSchema = z.object({
-    email: z.string().email({ message: "Should be email" }),
-    name: z.string().min(1, { message: "Minimum 1 symbol" }),
-    password: z.string().min(6, { message: "Minimum 6 symbols" })
-})
+// const registerUserSchema = z.object({
+//     email: z.string().email({ message: "Should be email" }),
+//     name: z.string().min(1, { message: "Minimum 1 symbol" }),
+//     password: z.string().min(6, { message: "Minimum 6 symbols" })
+// })
 
 const registerUser = async (formState: FormState, formData: FormData) => {
     try {
-        const validatedFields = registerUserSchema.parse({
+        // const validatedFields = registerUserSchema.parse({
+        //     email: formData.get("email"),
+        //     name: formData.get("name"),
+        //     password: formData.get("password")
+        // })
+        const validatedFields = {
             email: formData.get("email"),
-            name: formData.get("name"),
-            password: formData.get("password")
-        })
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
+            password: formData.get("password"),
+            role: "STUDENT"
+        }
         const response = await fetch(`${process.env.SERVER_URL}/auth/register`, {
             method: 'POST',
             headers: {

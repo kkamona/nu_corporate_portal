@@ -6,8 +6,11 @@ import { cookies } from "next/headers";
 import { z } from 'zod'
 
 const loginUserSchema = z.object({
-    email: z.string().email({ message: "Should be email" }),
-    password: z.string().min(4, { message: "Minimum 6 symbols" })
+    // email: z.string().email({ message: "Should be email" }),
+    // password: z.string().min(4, { message: "Minimum 6 symbols" }),
+    email: z.string(),
+    password: z.string()
+
 })
 
 const loginUser = async (formState: FormState, formData: FormData) => {
