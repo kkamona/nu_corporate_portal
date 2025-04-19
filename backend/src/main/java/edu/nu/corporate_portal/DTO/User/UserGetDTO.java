@@ -22,6 +22,13 @@ public class UserGetDTO {
     private String school;
     private String major;
     private String role;
+  
+    private boolean showName;
+    private boolean showContactInfo;
+    private boolean showDateOfBirth;
+    private boolean showSchool;
+    private boolean showMajor;
+    private boolean showProfilePicture;
 
     public UserGetDTO(User user) {
         this.id = user.getId();
@@ -36,5 +43,12 @@ public class UserGetDTO {
         this.school = user.getSchool() != null ? user.getSchool().name() : null;
         this.major = user.getMajor();
         this.role = user.getRole() != null ? user.getRole().name() : null;
+
+        this.showName = user.isShowName();
+        this.showContactInfo = user.isShowContactInfo();
+        this.showDateOfBirth = user.isShowDateOfBirth();
+        this.showSchool = user.isShowSchool();
+        this.showMajor = user.isShowMajor();
+        this.showProfilePicture = user.isShowProfilePicture();
     }
 }

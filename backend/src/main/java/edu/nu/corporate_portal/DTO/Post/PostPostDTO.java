@@ -1,4 +1,4 @@
-package edu.nu.corporate_portal.DTO.Content;
+package edu.nu.corporate_portal.DTO.Post;
 
 import lombok.Data;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Data
-public class ContentPostDTO {
+public class PostPostDTO {
     private String title;
     private String text;
 }

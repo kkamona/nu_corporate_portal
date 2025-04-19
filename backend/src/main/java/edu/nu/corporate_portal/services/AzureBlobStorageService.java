@@ -1,7 +1,7 @@
 package edu.nu.corporate_portal.services;
 
-import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +18,6 @@ public class AzureBlobStorageService {
     public AzureBlobStorageService(BlobContainerClient containerClient) {
         this.containerClient = containerClient;
     }
-
-
 
     public String uploadFile(MultipartFile file) {
         try {

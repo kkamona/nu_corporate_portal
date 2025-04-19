@@ -1,12 +1,14 @@
 package edu.nu.corporate_portal.services;
 
-import edu.nu.corporate_portal.DTO.Content.ContentPostDTO;
-import edu.nu.corporate_portal.DTO.Content.ContentGetDTO;
-import edu.nu.corporate_portal.models.Content;
+import edu.nu.corporate_portal.DTO.Post.PostGetDTO;
+import edu.nu.corporate_portal.DTO.Post.PostPostDTO;
+import edu.nu.corporate_portal.models.Post;
 import edu.nu.corporate_portal.models.User;
-import edu.nu.corporate_portal.repository.ContentRepository;
+import edu.nu.corporate_portal.repository.PostRepository;
 import edu.nu.corporate_portal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,25 +16,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("contentService")
-public class ContentService {
+public class PostService {
 
-    private final ContentRepository contentRepo;
+    private final PostRepository postRepo;
     private final UserRepository userRepo;
     private final AzureBlobStorageService storage;
 
     @Autowired
-    public ContentService(
-            ContentRepository contentRepo,
+    public PostService(
+            PostRepository postRepo,
             UserRepository userRepo,
             AzureBlobStorageService storage
     ) {
-        this.contentRepo = contentRepo;
+        this.postRepo = postRepo;
         this.userRepo = userRepo;
         this.storage = storage;
     }
 
-    public ContentGetDTO createContent(
-            ContentPostDTO dto,
+    public PostGetDTO createContent(
+            PostPostDTO dto,
             MultipartFile mainPhoto,
             List<MultipartFile> attachments,
             Long userId
@@ -46,70 +48,69 @@ public class ContentService {
                 .map(storage::uploadFile)
                 .collect(Collectors.toList());
 
-        Content content = new Content();
-        content.setTitle(dto.getTitle());
-        content.setText(dto.getText());
-        content.setMainPhotoUrl(mainUrl);
-        content.setAttachments(attachUrls);
-        content.setUser(user);
+        Post post = new Post();
+        post.setTitle(dto.getTitle());
+        post.setText(dto.getText());
+        post.setMainPhotoUrl(mainUrl);
+        post.setAttachments(attachUrls);
+        post.setUser(user);
 
-        Content saved = contentRepo.save(content);
+        Post saved = postRepo.save(post);
         return mapToGetDTO(saved);
     }
 
-    public ContentGetDTO getContent(Long id) {
+    public PostGetDTO getContent(Long id) {
         return mapToGetDTO(findById(id));
     }
 
-    public List<ContentGetDTO> listContents() {
-        return contentRepo.findAll()
-                .stream()
-                .map(this::mapToGetDTO)
-                .collect(Collectors.toList());
+
+    public Page<PostGetDTO> listContents(Pageable pageable) {
+        return postRepo.findAll(pageable)
+                .map(this::mapToGetDTO);
     }
 
-    public ContentGetDTO updateContent(
+    public PostGetDTO updateContent(
             Long id,
-            ContentPostDTO dto,
+            PostPostDTO dto,
             MultipartFile mainPhoto,
             List<MultipartFile> attachments
     ) {
-        Content content = findById(id);
+        Post post = findById(id);
 
         if (dto.getTitle() != null) {
-            content.setTitle(dto.getTitle());
+            post.setTitle(dto.getTitle());
         }
         if (dto.getText() != null) {
-            content.setText(dto.getText());
+            post.setText(dto.getText());
         }
         if (mainPhoto != null && !mainPhoto.isEmpty()) {
-            content.setMainPhotoUrl(storage.uploadFile(mainPhoto));
+            post.setMainPhotoUrl(storage.uploadFile(mainPhoto));
         }
         if (attachments != null && !attachments.isEmpty()) {
             List<String> newUrls = attachments.stream()
                     .filter(f -> !f.isEmpty())
                     .map(storage::uploadFile)
                     .collect(Collectors.toList());
-            content.setAttachments(newUrls);
+            post.setAttachments(newUrls);
         }
 
-        Content updated = contentRepo.save(content);
+        Post updated = postRepo.save(post);
         return mapToGetDTO(updated);
     }
 
     public void deleteContent(Long id) {
         findById(id);
-        contentRepo.deleteById(id);
+        postRepo.deleteById(id);
     }
 
 
-    private Content findById(Long id) {
-        return contentRepo.findById(id)
+    private Post findById(Long id) {
+        return postRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Content not found: " + id));
     }
 
-    private ContentGetDTO mapToGetDTO(Content c) {
-        return new ContentGetDTO(
+    private PostGetDTO mapToGetDTO(Post c) {
+        return new PostGetDTO(
                 c.getId(),
                 c.getUser().getId(),
                 c.getTitle(),

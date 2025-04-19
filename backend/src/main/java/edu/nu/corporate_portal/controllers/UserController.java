@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,6 +60,16 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody UserPatchDTO patchDTO) throws IOException {
         User updated = userService.updateUser(id, patchDTO);
+        return ResponseEntity.ok(new UserGetDTO(updated));
+    }
+
+    @PostMapping(value = "/{id}/photo", consumes = "multipart/form-data")
+    @PreAuthorize("hasRole('ADMIN') or #id.toString() == authentication.name")
+    public ResponseEntity<UserGetDTO> setProfilePhoto(
+            @PathVariable Long id,
+            @RequestParam("profilePhoto") MultipartFile profilePhoto
+    ) throws IOException {
+        User updated = userService.uploadProfilePhoto(id, profilePhoto);
         return ResponseEntity.ok(new UserGetDTO(updated));
     }
 

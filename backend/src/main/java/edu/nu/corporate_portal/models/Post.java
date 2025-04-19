@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "content")
-public class Content {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
