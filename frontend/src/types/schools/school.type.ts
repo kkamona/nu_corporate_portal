@@ -7,3 +7,5 @@ export type School =
     | 'NUSOM'
     | 'SMG'
     | 'SSH'
+
+export const SCHOOLS = ['SEDS', 'SSH', 'SMG', 'NUSOM', 'CPS', 'GSB', 'GSPP', 'GSE']

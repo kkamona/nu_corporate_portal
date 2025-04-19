@@ -16,3 +16,5 @@ export type UserType = {
     major: string,
     role: UserRole
 }
+
+export const ROLES = ['STUDENT', 'PROFESSOR', 'STAFF']
