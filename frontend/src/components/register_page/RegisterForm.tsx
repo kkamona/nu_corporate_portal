@@ -57,13 +57,26 @@ const RegisterForm = () => {
 
 						<Input
 							name='email'
-							type='email'
+							type='text'
+							// type='email'
 							placeholder='example@nu.edu.kz'
 						/>
 					</div>
 					<div className='flex flex-col gap-1 p-2'>
-						<Label>Name</Label>
-						<Input name='name' type='text' placeholder='*******' />
+						<Label>First Name</Label>
+						<Input
+							name='firstName'
+							type='text'
+							placeholder='Alikhan'
+						/>
+					</div>
+					<div className='flex flex-col gap-1 p-2'>
+						<Label>Last Name</Label>
+						<Input
+							name='lastName'
+							type='text'
+							placeholder='Alikhanov'
+						/>
 					</div>
 					<div className='flex flex-col gap-1 p-2'>
 						<Label>Password</Label>

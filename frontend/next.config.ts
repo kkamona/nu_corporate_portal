@@ -6,14 +6,6 @@ const nextConfig: NextConfig = {
     SERVER_URL: process.env.SERVER_URL,
     APP_URL: process.env.APP_URL,
 
-    AUTH_SECRET: process.env.AUTH_SECRET,
-
-    AUTH_MICROSOFT_ENTRA_ID_ID: process.env.AUTH_MICROSOFT_ENTRA_ID_ID,
-    AUTH_MICROSOFT_ENTRA_ID_SECRET: process.env.AUTH_MICROSOFT_ENTRA_ID_SECRET,
-    AUTH_MICROSOFT_ENTRA_ID_TENANT_ID: process.env.AUTH_MICROSOFT_ENTRA_ID_TENANT_ID,
-
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-
   }
 
 };
