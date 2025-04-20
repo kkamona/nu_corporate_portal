@@ -57,3 +57,5 @@ build/
 hs_err_pid*
 replay_pid*
 ac204852c69e32deaa7efaa5970e4f825a193ccc
+
+/backend/uploaded-static/

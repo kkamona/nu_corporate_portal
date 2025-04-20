@@ -4,8 +4,12 @@ import edu.nu.corporate_portal.DTO.Event.EventPatchDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +20,14 @@ public class Event {
     @Id
     @GeneratedValue
     Long id;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
 
     @Setter
     @Column(nullable = false)
@@ -35,6 +47,14 @@ public class Event {
     @Setter
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
+
+    @Setter
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
+
+    @Setter
+    @Column(name = "end_time", nullable = false)
+    private LocalTime endTime;
 
     @Setter
     @Column(name = "is_public", nullable = false)

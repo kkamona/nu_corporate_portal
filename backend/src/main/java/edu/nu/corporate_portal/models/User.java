@@ -61,6 +61,31 @@ public class User {
     private String profilePicture;
 
     @Setter
+    @Column(name = "show_name", nullable = false)
+    private boolean showName = true;
+
+    @Setter
+    @Column(name = "show_contact_info", nullable = false)
+    private boolean showContactInfo = true;
+
+    @Setter
+    @Column(name = "show_date_of_birth", nullable = false)
+    private boolean showDateOfBirth = true;
+
+    @Setter
+    @Column(name = "show_school", nullable = false)
+    private boolean showSchool = true;
+
+    @Setter
+    @Column(name = "show_major", nullable = false)
+    private boolean showMajor = true;
+
+    @Setter
+    @Column(name = "show_profile_picture", nullable = false)
+    private boolean showProfilePicture = true;
+
+
+    @Setter
     @Column(name = "refresh_token")
     private String refreshToken;
 

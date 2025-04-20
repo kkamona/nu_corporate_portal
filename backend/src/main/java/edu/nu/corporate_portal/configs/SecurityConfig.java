@@ -16,7 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,7 +32,6 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
     @Value(value = "${jwt.secret}")
     private String jwtSecret;
-
 
     @Bean
     public JwtDecoder jwtDecoder() {
@@ -58,7 +60,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/auth/**"
+                                "/auth/**",
+                                "/files/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
