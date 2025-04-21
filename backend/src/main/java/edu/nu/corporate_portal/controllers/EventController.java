@@ -7,6 +7,7 @@ import edu.nu.corporate_portal.models.Event;
 import edu.nu.corporate_portal.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,24 +40,25 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<EventGetDTO> create(
-            @Valid @RequestBody EventPostDTO dto
-    ) {
+    public ResponseEntity<EventGetDTO> create(@Valid @RequestBody EventPostDTO dto) {
         Event e = new Event();
         e.setTitle(dto.getTitle());
         e.setDescription(dto.getDescription());
         e.setLocation(dto.getLocation());
         e.setStartDate(dto.getStartDate());
         e.setEndDate(dto.getEndDate());
+        e.setStartTime(dto.getStartTime());
+        e.setEndTime(dto.getEndTime());
         e.setPublic(dto.getIsPublic());
         if (dto.getTargetRoles() != null) e.setTargetRoles(dto.getTargetRoles());
         if (dto.getTargetSchools() != null) e.setTargetSchools(dto.getTargetSchools());
 
         Event saved = eventService.createEvent(e);
         return ResponseEntity
-                .status(201)
+                .status(HttpStatus.CREATED)
                 .body(new EventGetDTO(saved));
     }
+
 
     @PatchMapping("/{id}")
     public ResponseEntity<EventGetDTO> patch(

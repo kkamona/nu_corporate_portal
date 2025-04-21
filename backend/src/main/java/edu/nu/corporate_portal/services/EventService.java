@@ -37,6 +37,8 @@ public class EventService {
             if (patch.getLocation() != null)     ev.setLocation(patch.getLocation());
             if (patch.getStartDate() != null)    ev.setStartDate(patch.getStartDate());
             if (patch.getEndDate() != null)      ev.setEndDate(patch.getEndDate());
+            if (patch.getStartTime() != null) ev.setStartTime(patch.getStartTime());
+            if (patch.getEndTime()   != null) ev.setEndTime(patch.getEndTime());
             ev.setPublic(patch.isPublic());
             if (!patch.getTargetRoles().isEmpty())   ev.setTargetRoles(patch.getTargetRoles());
             if (!patch.getTargetSchools().isEmpty()) ev.setTargetSchools(patch.getTargetSchools());
