@@ -18,8 +18,8 @@ public class EventGetDTO {
     private String location;
     private LocalDate startDate;
     private LocalDate endDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private String startTime;
+    private String endTime;
     private Boolean isPublic;
     private Set<Role> targetRoles;
     private Set<School> targetSchools;
@@ -31,8 +31,8 @@ public class EventGetDTO {
         this.location = e.getLocation();
         this.startDate = e.getStartDate();
         this.endDate = e.getEndDate();
-        this.startTime = e.getStartTime();
-        this.endTime = e.getEndTime();
+        this.startTime = e.getStartTime().toString();
+        this.endTime   = e.getEndTime().toString();
         this.isPublic = e.isPublic();
         this.targetRoles = e.getTargetRoles();
         this.targetSchools = e.getTargetSchools();

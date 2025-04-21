@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,11 +49,11 @@ public class Event {
 
     @Setter
     @Column(name = "start_time", nullable = false)
-    private LocalTime startTime;
+    private String startTime;
 
     @Setter
     @Column(name = "end_time", nullable = false)
-    private LocalTime endTime;
+    private String endTime;
 
     @Setter
     @Column(name = "is_public", nullable = false)
@@ -75,7 +74,7 @@ public class Event {
     private Set<School> targetSchools = new HashSet<>();
 
     public enum Role {
-        STUDENT,  PROFESSOR, STAFF
+        STUDENT, PROFESSOR, STAFF
     }
 
     public enum School {

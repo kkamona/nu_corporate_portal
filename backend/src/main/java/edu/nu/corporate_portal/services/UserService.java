@@ -45,7 +45,6 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-
         if (dto.getPasswordHash() != null) user.setHashedPassword(dto.getPasswordHash());
         if (dto.getFirstName() != null) user.setFirstName(dto.getFirstName());
         if (dto.getLastName() != null) user.setLastName(dto.getLastName());
@@ -55,8 +54,16 @@ public class UserService {
         if (dto.getMajor() != null) user.setMajor(dto.getMajor());
         if (dto.getRole() != null) user.setRole(dto.getRole());
 
+        if (dto.getShowName() != null) user.setShowName(dto.getShowName());
+        if (dto.getShowContactInfo() != null) user.setShowContactInfo(dto.getShowContactInfo());
+        if (dto.getShowDateOfBirth() != null) user.setShowDateOfBirth(dto.getShowDateOfBirth());
+        if (dto.getShowSchool() != null) user.setShowSchool(dto.getShowSchool());
+        if (dto.getShowMajor() != null) user.setShowMajor(dto.getShowMajor());
+        if (dto.getShowProfilePicture() != null) user.setShowProfilePicture(dto.getShowProfilePicture());
+
         return userRepository.save(user);
     }
+
 
     @Transactional
     public User uploadProfilePhoto(Long userId, MultipartFile photo) throws IOException {

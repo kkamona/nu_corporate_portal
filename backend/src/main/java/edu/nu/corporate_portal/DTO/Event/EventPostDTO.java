@@ -5,11 +5,11 @@ import edu.nu.corporate_portal.models.Event.School;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Set;
 
 @Data
@@ -32,12 +32,18 @@ public class EventPostDTO {
     private LocalDate endDate;
 
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime startTime;
+    @Pattern(
+            regexp = "^([01]\\d|2[0-3]):[0-5]\\d$",
+            message = "startTime must be in 24‑hour HH:mm format"
+    )
+    private String startTime;
 
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    private LocalTime endTime;
+    @Pattern(
+            regexp = "^([01]\\d|2[0-3]):[0-5]\\d$",
+            message = "endTime must be in 24‑hour HH:mm format"
+    )
+    private String endTime;
 
     @NotNull
     private Boolean isPublic = Boolean.TRUE;
