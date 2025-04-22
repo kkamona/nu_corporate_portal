@@ -35,12 +35,12 @@ export async function fetchWithAuth(endpoint: string, options: RequestInit = {})
 }
 
 // Server-side fetch function that includes the auth token
-export async function serverFetch(endpoint: string, options: RequestInit = {}) {
+export async function serverFetch(endpoint: string, options: RequestInit = {}, contentType?: string) {
   const cookieStore = cookies()
   const token = (await cookieStore).get("auth-token")?.value
 
   const headers = {
-    "Content-Type": "application/json",
+    "Content-Type": `${contentType ? contentType : "application/json"}`,
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   }

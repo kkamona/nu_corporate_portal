@@ -3,6 +3,7 @@
 import {
 	ColumnDef,
 	ColumnFiltersState,
+	VisibilityState,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -10,6 +11,13 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 
+import { Button } from '@/components/ui/button'
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import {
 	Table,
@@ -19,6 +27,7 @@ import {
 	TableHeader,
 	TableRow
 } from '@/components/ui/table'
+import { ChevronDown } from 'lucide-react'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -30,14 +39,21 @@ export function DataTable<TData, TValue>({
 	data
 }: DataTableProps<TData, TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+		{}
+	)
+
 	const table = useReactTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
+		onColumnVisibilityChange: setColumnVisibility,
 		state: {
-			columnFilters
+			columnFilters,
+			columnVisibility
 		}
 	})
 
@@ -58,6 +74,32 @@ export function DataTable<TData, TValue>({
 					}
 					className='max-w-sm'
 				/>
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button variant='outline' className='ml-auto' aria-label="Open actions menu">
+							Columns <ChevronDown />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align='end'>
+						{table
+							.getAllColumns()
+							.filter(column => column.getCanHide())
+							.map(column => {
+								return (
+									<DropdownMenuCheckboxItem
+										key={column.id}
+										className='capitalize'
+										checked={column.getIsVisible()}
+										onCheckedChange={value =>
+											column.toggleVisibility(!!value)
+										}
+									>
+										{column.id}
+									</DropdownMenuCheckboxItem>
+								)
+							})}
+					</DropdownMenuContent>
+				</DropdownMenu>
 			</div>
 			<div className='rounded-md border'>
 				<Table>

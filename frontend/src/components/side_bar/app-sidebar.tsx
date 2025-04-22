@@ -68,13 +68,14 @@ export async function AppSidebar() {
 
 	return (
 		<Sidebar>
-			<SidebarHeader className='relative h-[100px]'>
+			<SidebarHeader className='relative h-16'>
 				<Image
 					src={'/NU horizontal.png'}
 					alt='Logo image'
 					fill
 					className='object-cover object-[center_50%]'
 					sizes='200px'
+					priority={true}
 				/>
 			</SidebarHeader>
 			<SidebarContent>

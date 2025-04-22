@@ -74,6 +74,24 @@ const EventCreateForm = () => {
 								required
 							/>
 						</div>
+						<div className='flex flex-col gap-2'>
+							<Label htmlFor='startTime'>Start Time*</Label>
+							<Input
+								type='time'
+								name='startTime'
+								id='startTime'
+								required
+							/>
+						</div>
+						<div className='flex flex-col gap-2'>
+							<Label htmlFor='endTime'>End Time*</Label>
+							<Input
+								type='time'
+								name='endTime'
+								id='endTime'
+								required
+							/>
+						</div>
 					</div>
 
 					<div className='flex items-center gap-2'>

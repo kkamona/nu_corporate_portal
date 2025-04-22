@@ -13,18 +13,20 @@ export const createEvent = async (formState: FormState, formData: FormData) => {
             location: formData.get("location") as string,
             startDate: formData.get("startDate") as string,
             endDate: formData.get("endDate") as string,
+            startTime: formData.get("startTime"),
+            endTime: formData.get("endTime"),
             isPublic: formData.get("isPublic") === "on",
             targetRoles: formData.getAll("targetRoles[]") as string[],
             targetSchools: formData.getAll("targetSchools[]") as string[],
         }
-        // console.log(validatedFields)
-        const response = await serverFetch("/events", {
-            method: "POST",
-            body: JSON.stringify(validatedFields)
-        })
-        if (!response.ok) {
-            throw new Error("Failed to create event");
-        }
+        console.log(validatedFields)
+        // const response = await serverFetch("/events", {
+        //     method: "POST",
+        //     body: JSON.stringify(validatedFields)
+        // })
+        // if (!response.ok) {
+        //     throw new Error("Failed to create event");
+        // }
         return toFormState("SUCCESS", "Event created successfully")
     } catch (error) {
         return fromErrorToFormState(error)
