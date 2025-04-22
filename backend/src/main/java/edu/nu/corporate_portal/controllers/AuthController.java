@@ -50,7 +50,6 @@ public class AuthController {
                     )
             );
 
-            // load User so we have the ID
             User user = userRepository.findByEmail(loginDTO.getEmail())
                     .orElseThrow();
 

@@ -35,14 +35,12 @@ public class PostService {
 
     public PostGetDTO createContent(
             PostPostDTO dto,
-            MultipartFile mainPhoto,
             List<MultipartFile> attachments,
             Long userId
     ) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        String mainUrl = storage.uploadFile(mainPhoto);
         List<String> attachUrls = attachments.stream()
                 .filter(f -> !f.isEmpty())
                 .map(storage::uploadFile)
@@ -51,7 +49,6 @@ public class PostService {
         Post post = new Post();
         post.setTitle(dto.getTitle());
         post.setText(dto.getText());
-        post.setMainPhotoUrl(mainUrl);
         post.setAttachments(attachUrls);
         post.setUser(user);
 
@@ -63,7 +60,6 @@ public class PostService {
         return mapToGetDTO(findById(id));
     }
 
-
     public Page<PostGetDTO> listContents(Pageable pageable) {
         return postRepo.findAll(pageable)
                 .map(this::mapToGetDTO);
@@ -72,7 +68,6 @@ public class PostService {
     public PostGetDTO updateContent(
             Long id,
             PostPostDTO dto,
-            MultipartFile mainPhoto,
             List<MultipartFile> attachments
     ) {
         Post post = findById(id);
@@ -82,9 +77,6 @@ public class PostService {
         }
         if (dto.getText() != null) {
             post.setText(dto.getText());
-        }
-        if (mainPhoto != null && !mainPhoto.isEmpty()) {
-            post.setMainPhotoUrl(storage.uploadFile(mainPhoto));
         }
         if (attachments != null && !attachments.isEmpty()) {
             List<String> newUrls = attachments.stream()
@@ -103,7 +95,6 @@ public class PostService {
         postRepo.deleteById(id);
     }
 
-
     private Post findById(Long id) {
         return postRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Content not found: " + id));
@@ -115,7 +106,6 @@ public class PostService {
                 c.getUser().getId(),
                 c.getTitle(),
                 c.getText(),
-                c.getMainPhotoUrl(),
                 c.getAttachments()
         );
     }

@@ -36,9 +36,9 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+//    public Optional<User> getUserByEmail(String email) {
+//        return userRepository.findByEmail(email);
+//    }
 
     @Transactional
     public User updateUser(Long id, UserPatchDTO dto) throws IOException {

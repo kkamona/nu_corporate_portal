@@ -66,7 +66,7 @@ public class User {
 
     @Setter
     @Column(name = "show_contact_info", nullable = false)
-    private boolean showContactInfo = true;
+    private boolean showContactInfo = false;
 
     @Setter
     @Column(name = "show_date_of_birth", nullable = false)
