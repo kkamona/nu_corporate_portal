@@ -51,7 +51,6 @@ public class PostService {
         Post post = new Post();
         post.setTitle(dto.getTitle());
         post.setText(dto.getText());
-        post.setMainPhotoUrl(mainUrl);
         post.setAttachments(attachUrls);
         post.setUser(user);
 
@@ -72,7 +71,6 @@ public class PostService {
     public PostGetDTO updateContent(
             Long id,
             PostPostDTO dto,
-            MultipartFile mainPhoto,
             List<MultipartFile> attachments
     ) {
         Post post = findById(id);
@@ -82,9 +80,6 @@ public class PostService {
         }
         if (dto.getText() != null) {
             post.setText(dto.getText());
-        }
-        if (mainPhoto != null && !mainPhoto.isEmpty()) {
-            post.setMainPhotoUrl(storage.uploadFile(mainPhoto));
         }
         if (attachments != null && !attachments.isEmpty()) {
             List<String> newUrls = attachments.stream()
@@ -103,7 +98,6 @@ public class PostService {
         postRepo.deleteById(id);
     }
 
-
     private Post findById(Long id) {
         return postRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Content not found: " + id));
@@ -115,7 +109,6 @@ public class PostService {
                 c.getUser().getId(),
                 c.getTitle(),
                 c.getText(),
-                c.getMainPhotoUrl(),
                 c.getAttachments()
         );
     }

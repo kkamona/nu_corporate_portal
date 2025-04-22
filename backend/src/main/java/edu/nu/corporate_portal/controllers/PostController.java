@@ -62,13 +62,11 @@ public class PostController {
     public ResponseEntity<PostGetDTO> updateContent(
             @PathVariable Long id,
             @ModelAttribute PostPostDTO dto,
-            @RequestParam(value = "mainPhoto", required = false) MultipartFile mainPhoto,
             @RequestParam(value = "attachments", required = false) List<MultipartFile> attachments
     ) {
         PostGetDTO updated = postService.updateContent(
                 id,
                 dto,
-                mainPhoto,
                 attachments != null ? attachments : List.of()
         );
         return ResponseEntity.ok(updated);

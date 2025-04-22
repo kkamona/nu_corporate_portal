@@ -33,8 +33,8 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    @Column(name = "main_photo_url")
-    private String mainPhotoUrl;
+//    @Column(name = "main_photo_url")
+//    private String mainPhotoUrl;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
