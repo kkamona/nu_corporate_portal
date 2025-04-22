@@ -30,14 +30,12 @@ public class PostController {
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<PostGetDTO> createContent(
             @ModelAttribute PostPostDTO dto,
-            @RequestParam("mainPhoto") MultipartFile mainPhoto,
             @RequestParam(value = "attachments", required = false) List<MultipartFile> attachments,
             @AuthenticationPrincipal Jwt jwt
     ) {
         Long userId = jwt.getClaim("id");
         PostGetDTO created = postService.createContent(
                 dto,
-                mainPhoto,
                 attachments != null ? attachments : List.of(),
                 userId
         );

@@ -35,14 +35,12 @@ public class PostService {
 
     public PostGetDTO createContent(
             PostPostDTO dto,
-            MultipartFile mainPhoto,
             List<MultipartFile> attachments,
             Long userId
     ) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
-        String mainUrl = storage.uploadFile(mainPhoto);
         List<String> attachUrls = attachments.stream()
                 .filter(f -> !f.isEmpty())
                 .map(storage::uploadFile)
@@ -61,7 +59,6 @@ public class PostService {
     public PostGetDTO getContent(Long id) {
         return mapToGetDTO(findById(id));
     }
-
 
     public Page<PostGetDTO> listContents(Pageable pageable) {
         return postRepo.findAll(pageable)
