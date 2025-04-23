@@ -1,13 +1,5 @@
 import BreadcrumbDynamic from '@/components/breadcrumb/BreadcrumbDynamic'
 import { AppSidebar } from '@/components/side_bar/app-sidebar'
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator
-} from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import {
 	SidebarInset,

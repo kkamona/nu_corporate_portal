@@ -47,7 +47,7 @@ const ProfileEditForm = ({
 		if (formState.status === 'SUCCESS') {
 			onSuccess?.()
 		}
-	}, [formState.status])
+	}, [formState.status, onSuccess])
 
 	return (
 		<form action={action}>

@@ -1,7 +1,5 @@
 import UserCard from '@/components/profile_page/UserCard'
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { getCurrentUser } from '@/lib/auth'
-import { cookies } from 'next/headers'
 
 const ProfilePage = async () => {
 	const user = await getCurrentUser()

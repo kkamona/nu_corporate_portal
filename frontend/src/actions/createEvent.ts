@@ -1,9 +1,7 @@
 'use server'
 
-import { serverFetch } from "@/lib/api"
 import { FormState } from "@/types/formState/formState.type"
 import { fromErrorToFormState, toFormState } from "@/utils/to-form-state"
-import { cookies } from "next/headers"
 
 export const createEvent = async (formState: FormState, formData: FormData) => {
     try {

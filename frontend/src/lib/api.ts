@@ -2,7 +2,7 @@
 import { cookies } from "next/headers"
 
 // Base API URL
-const API_URL = process.env.SERVER_URL || "http://localhost:8080/api"
+const API_URL = process.env.INTERNAL_SERVER_URL || "http://localhost:8080/api"
 
 // Client-side fetch function that includes the auth token
 export async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {

@@ -19,7 +19,7 @@ const loginUser = async (formState: FormState, formData: FormData) => {
             email: formData.get("email"),
             password: formData.get("password")
         })
-        const response = await fetch(`${process.env.SERVER_URL}/auth/login`, {
+        const response = await fetch(`${process.env.INTERNAL_SERVER_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
