@@ -30,7 +30,7 @@ const RegisterForm = () => {
 		if (formState.status === 'SUCCESS') {
 			router.replace('/profile')
 		}
-	}, [formState])
+	}, [formState.status, router])
 
 	return (
 		<Card>

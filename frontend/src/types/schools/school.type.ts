@@ -1,5 +1,5 @@
-export type School =
-    | 'CPS'
+export type SchoolType =
+    | 'NUFYP'
     | 'GSB'
     | 'GSE'
     | 'GSPP'
@@ -7,5 +7,6 @@ export type School =
     | 'NUSOM'
     | 'SMG'
     | 'SSH'
+    | ''
 
-export const SCHOOLS = ['SEDS', 'SSH', 'SMG', 'NUSOM', 'CPS', 'GSB', 'GSPP', 'GSE']
+export const SCHOOLS = ['SEDS', 'SSH', 'SMG', 'NUSOM', 'NUFYP', 'GSB', 'GSPP', 'GSE']

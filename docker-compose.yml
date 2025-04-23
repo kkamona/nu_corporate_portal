@@ -29,6 +29,20 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       UPLOADS_DIR: /app/uploads/profilePicture
 
+  nextjs-app:
+    build:
+      context: ./frontend  # Important: point to frontend directory
+      dockerfile: Dockerfile
+    container_name: nextjs-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_SERVER_URL=/api
+      - INTERNAL_SERVER_URL=http://spring-app:8080/api
+    depends_on:
+      - spring-app
+
 volumes:
   pgdata:
   uploads:

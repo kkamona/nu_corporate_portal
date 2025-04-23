@@ -3,7 +3,6 @@
 import { FormState } from "@/types/formState/formState.type";
 import { fromErrorToFormState, toFormState } from "@/utils/to-form-state"
 import { cookies } from "next/headers";
-import { z } from 'zod'
 
 // const registerUserSchema = z.object({
 //     email: z.string().email({ message: "Should be email" }),
@@ -25,7 +24,7 @@ const registerUser = async (formState: FormState, formData: FormData) => {
             password: formData.get("password"),
             role: "STUDENT"
         }
-        const response = await fetch(`${process.env.SERVER_URL}/auth/register`, {
+        const response = await fetch(`${process.env.INTERNAL_SERVER_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

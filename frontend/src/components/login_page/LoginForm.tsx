@@ -49,6 +49,7 @@ const LoginForm = () => {
 							fill
 							className='object-cover object-[center_50%]'
 							sizes='200px'
+							priority={true}
 						/>
 					</div>
 				</CardTitle>

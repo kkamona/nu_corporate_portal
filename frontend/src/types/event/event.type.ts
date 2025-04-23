@@ -1,4 +1,4 @@
-import { School } from "../schools/school.type"
+import { SchoolType } from "../schools/school.type"
 import { UserRole } from "../user/user.type"
 
 export type EventType = {
@@ -10,5 +10,5 @@ export type EventType = {
     endDate: string
     isPublic: boolean
     targetRoles: UserRole[]
-    targetSchools: School[]
+    targetSchools: SchoolType[]
 }

@@ -119,7 +119,7 @@ export async function getCurrentUser() {
         return null
     }
     try {
-        const response = await fetch(`${process.env.SERVER_URL}/users/me`, {
+        const response = await fetch(`${process.env.INTERNAL_SERVER_URL}/users/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

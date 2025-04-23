@@ -16,9 +16,10 @@ import {
 import { updateUserProfile } from '@/actions/updateUserProfile'
 import { useToastMessage } from '@/hooks/use-toast-message'
 import { EMPTY_FORM_STATE } from '@/types/formState/formState.type'
+import { SchoolType } from '@/types/schools/school.type'
 import { UserType } from '@/types/user/user.type'
 
-const schools = [
+const schools: { value: SchoolType; label: string }[] = [
 	{ value: 'NUFYP', label: 'Center for Preparatory Study' },
 	{ value: 'GSB', label: 'Graduate School of Business' },
 	{ value: 'GSE', label: 'Graduate School of Education' },
@@ -46,7 +47,7 @@ const ProfileEditForm = ({
 		if (formState.status === 'SUCCESS') {
 			onSuccess?.()
 		}
-	}, [formState.status])
+	}, [formState.status, onSuccess])
 
 	return (
 		<form action={action}>

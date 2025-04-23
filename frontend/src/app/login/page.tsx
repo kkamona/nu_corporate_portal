@@ -1,5 +1,5 @@
 import LoginForm from '@/components/login_page/LoginForm'
-import { Card, CardHeader } from '@/components/ui/card'
+import { Suspense } from 'react'
 
 export default async function LoginPage() {
 	return (
@@ -11,19 +11,9 @@ export default async function LoginPage() {
 				backgroundPosition: 'center'
 			}}
 		>
-			{/* <div className='absolute inset-0 bg-black/40' /> */}
-			{/* <div className='relative z-10 mx-auto w-full max-w-md rounded-xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md'>
-				<div className='text-center'>
-					<h1 className='text-3xl font-bold'>
-						Sign in to your account
-					</h1>
-					<p className='mt-2 text-gray-600'>
-						Use your Microsoft Entra ID account
-					</p>
-				</div>
-				<LoginButton />
-			</div> */}
-			<LoginForm />
+			<Suspense fallback={<div>Loading...</div>}>
+				<LoginForm />
+			</Suspense>
 		</div>
 	)
 }
