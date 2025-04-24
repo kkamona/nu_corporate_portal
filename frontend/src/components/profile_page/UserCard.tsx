@@ -35,7 +35,7 @@ const UserCard = ({ user }: { user: UserType }) => {
 		<Card>
 			<CardHeader>
 				<CardTitle className='flex justify-between'>
-					<h3>Your profile</h3>
+					<h3>Personal Information</h3>
 					<div className='flex items-center gap-1'>
 						<Dialog
 							open={dialogState}

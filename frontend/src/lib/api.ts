@@ -1,4 +1,5 @@
 
+import { PostResponseType } from "@/types/post/post.type"
 import { cookies } from "next/headers"
 
 // Base API URL
@@ -49,4 +50,12 @@ export async function serverFetch(endpoint: string, options: RequestInit = {}, c
     ...options,
     headers,
   })
+}
+
+
+
+export const fetchPosts = async (page = 0, size = 10): Promise<PostResponseType> => {
+  const res = await fetch(`/posts?page=${page}&size=${size}`)
+  if (!res.ok) throw new Error('Failed to fetch')
+  return res.json()
 }
