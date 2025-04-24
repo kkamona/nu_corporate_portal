@@ -42,7 +42,7 @@ services:
       - INTERNAL_SERVER_URL=http://spring-app:8080/api
     depends_on:
       - spring-app
-
+    
 volumes:
   pgdata:
   uploads:

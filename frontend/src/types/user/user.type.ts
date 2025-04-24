@@ -20,7 +20,9 @@ export type UserType = {
     showDateOfBirth: boolean,
     showSchool: boolean,
     showMajor: boolean,
-    showProfilePicture: boolean
+    showProfilePicture: boolean,
+    division: string,
+    phoneNumber: string
 }
 
 export const ROLES = ['STUDENT', 'ADMIN', 'PROFESSOR', 'STAFF']
