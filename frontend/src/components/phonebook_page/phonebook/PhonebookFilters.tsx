@@ -10,7 +10,7 @@ import {
 	SelectValue
 } from '@/components/ui/select'
 
-const divisions = ['Faculty', 'Students', 'Admin']
+const divisions = ['Faculty', 'Student']
 
 const PhonebookFilters = ({
 	searchTerm,

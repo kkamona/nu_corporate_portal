@@ -121,7 +121,7 @@ const Phonebook = () => {
 				showSchool: true,
 				showMajor: true,
 				showProfilePicture: true,
-				division: 'Admin',
+				division: 'Faculty',
 				phoneNumber: '+7 (700) 654-3210'
 			},
 			{
