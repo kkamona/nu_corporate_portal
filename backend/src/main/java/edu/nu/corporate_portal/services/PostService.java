@@ -38,6 +38,7 @@ public class PostService {
             List<MultipartFile> attachments,
             Long userId
     ) {
+        System.out.println(dto);
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 

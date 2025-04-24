@@ -24,5 +24,4 @@ export type UserType = {
     division: string,
     phoneNumber: string
 }
-
 export const ROLES = ['STUDENT', 'ADMIN', 'PROFESSOR', 'STAFF']

@@ -15,7 +15,7 @@ const AvatarUploadForm = ({ user }: { user: UserType }) => {
 	)
 	useToastMessage(formState)
 	return (
-		<form ref={formRef} action={action} encType='multipart/form-data'>
+		<form ref={formRef} action={action}>
 			<input
 				type='file'
 				name='profilePhoto'

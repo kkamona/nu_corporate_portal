@@ -10,7 +10,8 @@ export const updateUserProfile = async (userId: number, formState: FormState, fo
             firstName: formData.get("firstName"),
             lastName: formData.get("lastName"),
             school: formData.get("school"),
-            dateOfBirth: formData.get("dateOfBirth")
+            dateOfBirth: formData.get("dateOfBirth"),
+            contactInfo: formData.get("contactInfo")
         }
         // console.log(validatedFields)
         const response = await serverFetch(`/users/${userId}`, {
