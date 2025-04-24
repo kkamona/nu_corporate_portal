@@ -10,7 +10,7 @@ export const uploadAvatar = async (userId: number, formState: FormState, formDat
 
         const token = (await cookies()).get("auth-token")?.value
 
-        const response = await fetch(`${process.env.SERVER_URL}/users/${userId}/photo`, {
+        const response = await fetch(`${process.env.INTERNAL_SERVER_URL}/users/${userId}/photo`, {
             method: "POST",
             body: formData,
             headers: {

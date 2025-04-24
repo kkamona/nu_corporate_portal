@@ -22,5 +22,4 @@ export type UserType = {
     showMajor: boolean,
     showProfilePicture: boolean
 }
-
 export const ROLES = ['STUDENT', 'ADMIN', 'PROFESSOR', 'STAFF']

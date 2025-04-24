@@ -4,7 +4,7 @@ import { getCurrentUser } from '@/lib/auth'
 const ProfilePage = async () => {
 	const user = await getCurrentUser()
 	// const token = (await cookies()).get("auth-token")?.value
-	console.log(user)
+	// console.log(user)
 	return (
 		<div>
 			<h1>Profile page</h1>
