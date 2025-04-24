@@ -1,34 +1,12 @@
 'use client'
 
-import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-
-import ReferenceCard from '../reference_contacts/ReferenceCard'
 
 import ContactCard from './ContactCard'
 import PhonebookFilters from './PhonebookFilters'
 import Sidebar from './Sidebar'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue
-} from '@/components/ui/select'
 import { UserType } from '@/types/user/user.type'
-
-const divisions = ['Faculty', 'Students', 'Admin']
-const schools = [
-	'Center for Preparatory Studies',
-	'SEDS',
-	'SSH',
-	'GSB',
-	'SMG',
-	'NUSOM'
-]
 
 const Phonebook = () => {
 	const router = useRouter()
