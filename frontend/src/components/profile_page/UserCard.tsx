@@ -25,6 +25,7 @@ import AvatarUploadForm from './AvatarUploadForm'
 import ProfileConfigForm from './ProfileConfigForm'
 import ProfileEditForm from './ProfileEditForm'
 import { UserType } from '@/types/user/user.type'
+import { formatPhone } from '@/utils/format-phone'
 
 const UserCard = ({ user }: { user: UserType }) => {
 	const [dialogState, setDialogState] = useState(false)
@@ -113,23 +114,16 @@ const UserCard = ({ user }: { user: UserType }) => {
 						<div className='absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100'>
 							<UploadIcon className='h-6 w-6 text-white' />
 						</div>
-						{/* <form action=''>
-							<input
-								type='file'
-								accept='image/*'
-								className='absolute inset-0 cursor-pointer opacity-0'
-								onChange={e => {
-									// handle file upload here
-									console.log(e.target.files?.[0])
-								}}
-							/>
-						</form> */}
 						<AvatarUploadForm user={user} />
 					</div>
 					<div>
 						<div>{`Full name: ${user.firstName} ${user.lastName}`}</div>
 						<div>{`Email: ${user.email}`}</div>
 						<div>{`School ${user.school}`}</div>
+					</div>
+					<div>
+						<div>{`Phone number: ${formatPhone(user.contactInfo)}`}</div>
+						<div>{`Major: ${user.major}`}</div>
 						<div>{`Date of birth: ${user.dateOfBirth}`}</div>
 					</div>
 				</div>
