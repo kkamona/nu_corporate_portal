@@ -22,6 +22,7 @@ const registerUser = async (formState: FormState, formData: FormData) => {
             firstName: formData.get("firstName"),
             lastName: formData.get("lastName"),
             password: formData.get("password"),
+            gender: formData.get("gender"),
             role: "STUDENT"
         }
         const response = await fetch(`${process.env.INTERNAL_SERVER_URL}/auth/register`, {
@@ -34,7 +35,14 @@ const registerUser = async (formState: FormState, formData: FormData) => {
         if (!response.ok) {
             throw new Error("Registration failed")
         }
-        const { token } = await response.json()
+        const login_response = await fetch(`${process.env.INTERNAL_SERVER_URL}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(validatedFields)
+        })
+        const { token } = await login_response.json()
         const cookieStore = cookies();
         (await cookieStore).set("auth-token", token, {
             httpOnly: true,

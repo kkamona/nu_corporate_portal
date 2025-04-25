@@ -4,6 +4,8 @@ export type PostType = {
     title: string
     text: string
     attachments: string[]
+    newsThumbnail: string
+    news: boolean
 }
 
 export type PostResponseType = {

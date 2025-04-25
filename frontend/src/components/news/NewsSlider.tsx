@@ -5,13 +5,13 @@ import { useKeenSlider } from 'keen-slider/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useRef } from 'react'
 
-import { EventType } from '@/types/event/event.type'
+import { PostType } from '@/types/post/post.type'
 
 type Props = {
-	events: EventType[]
+	news: PostType[]
 }
 
-export default function EventSlider({ events }: Props) {
+export default function NewsSlider({ news }: Props) {
 	const sliderRef = useRef<HTMLDivElement>(null)
 	const [sliderInstanceRef, slider] = useKeenSlider<HTMLDivElement>({
 		loop: true,
@@ -27,25 +27,28 @@ export default function EventSlider({ events }: Props) {
 				ref={sliderInstanceRef}
 				className='keen-slider overflow-hidden rounded'
 			>
-				{events.map(event => (
+				{news.map(news => (
 					<div
-						key={event.id}
-						className='keen-slider__slide rounded bg-gray-100 py-4 px-20 shadow-md'
+						key={news.id}
+						className='keen-slider__slide bg-gray-100 p-4 shadow-md'
 					>
+						{news.newsThumbnail && (
+							<img
+								src={`${news.newsThumbnail}?sp=rl&st=2025-04-19T12:00:17Z&se=2025-09-16T20:00:17Z&spr=https&sv=2024-11-04&sr=c&sig=KYbm3kp%2FOaCpvDyzu6Hvh8OBkfb%2Fm04JESmEMqt9y3Q%3D`}
+								alt='News photo'
+								className='mb-4 h-64 w-full rounded object-cover'
+							/>
+						)}
 						<h3 className='mb-1 text-xl font-semibold'>
-							{event.title}
+							{news.title}
 						</h3>
-						<p className='mb-2'>{event.description}</p>
-						<p className='text-sm text-gray-500'>
-							{new Date(event.startDate).toLocaleDateString()} —{' '}
-							{new Date(event.endDate).toLocaleDateString()}
-						</p>
+						<p className='text-gray-700'>{news.text}</p>
 					</div>
 				))}
 			</div>
 
 			{/* Navigation Buttons */}
-			{events.length > 0 && (
+			{news.length > 0 && (
 				<>
 					<button
 						onClick={() => slider.current?.prev()}

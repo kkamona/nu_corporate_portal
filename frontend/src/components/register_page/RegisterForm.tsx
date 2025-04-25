@@ -16,6 +16,13 @@ import {
 } from '../ui/card'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '../ui/select'
 
 import registerUser from '@/actions/registerUser'
 import { useToastMessage } from '@/hooks/use-toast-message'
@@ -77,6 +84,18 @@ const RegisterForm = () => {
 							type='text'
 							placeholder='Alikhanov'
 						/>
+					</div>
+					<div className='flex flex-col gap-1 p-2'>
+						<Label>Gender</Label>
+						<Select name='gender'>
+							<SelectTrigger>
+								<SelectValue placeholder='gender' />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value='mail'>Mail</SelectItem>
+								<SelectItem value='femail'>Femail</SelectItem>
+							</SelectContent>
+						</Select>
 					</div>
 					<div className='flex flex-col gap-1 p-2'>
 						<Label>Password</Label>

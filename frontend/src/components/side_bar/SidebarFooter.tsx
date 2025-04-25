@@ -46,11 +46,8 @@ const SidebarFooterContent = ({ user }: { user: UserType }) => {
 									alt={user.firstName}
 								/>
 								<AvatarFallback className='rounded-lg'>
-									{user.firstName && user.firstName[0] &&
-										user.firstName[0] +
-											' ' + user.lastName &&
-											user.lastName[0] &&
-										user.lastName[0]}
+									{user?.firstName && user.firstName[0]}{' '}
+									{user?.lastName && user.lastName[0]}
 								</AvatarFallback>
 							</Avatar>
 							<div className='grid flex-1 text-left text-sm leading-tight'>
