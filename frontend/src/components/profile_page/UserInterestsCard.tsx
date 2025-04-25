@@ -43,13 +43,13 @@ const UserInterestsCard = ({ user }: { user: UserType }) => {
 								</DialogTitle>
 								<DialogDescription></DialogDescription>
 							</DialogHeader>
-						<InterestsEditForm
-							user={user}
-							onSuccess={() => {
-								setDialogState(false)
-								router.refresh()
-							}}
-						/>
+							<InterestsEditForm
+								user={user}
+								onSuccess={() => {
+									setDialogState(false)
+									router.refresh()
+								}}
+							/>
 						</DialogContent>
 					</Dialog>
 				</CardTitle>
@@ -57,13 +57,11 @@ const UserInterestsCard = ({ user }: { user: UserType }) => {
 			<CardContent>
 				<div className='flex flex-col gap-4'>
 					<p>My interests: {user.interests || 'No information'}</p>
-					<div className=''>
-						Member of:{' '}
+					<div className='flex items-center gap-2'>
+						<span>Member of: </span>
 						{user.clubs.length > 0
 							? user.clubs.map(club => (
-									<Badge variant='outline' key={club.id}>
-										{club.name}
-									</Badge>
+									<Badge key={club.id}>{club.name}</Badge>
 								))
 							: 'Not member of any club'}
 					</div>

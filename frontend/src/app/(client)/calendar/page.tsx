@@ -1,12 +1,13 @@
-const CalendarPage = async () => {
+import CalendarWrapper from '@/components/calendar/CalendarWrapper'
+import { serverFetch } from '@/lib/api'
+
+export default async function HomaPage() {
+	const response = await serverFetch('/events')
+	const events = await response.json()
+	const date = new Date()
 	return (
-		<div className=''>
-			<h2>Calendar page</h2>
+		<div className='flex items-center justify-center'>
+			<CalendarWrapper events={events} currentMonth={date} />
 		</div>
 	)
 }
-export default CalendarPage
-
-// We can use the library like react-big-calendar
-// or write the component by yourself
-// Seems like writing by ourself will be better

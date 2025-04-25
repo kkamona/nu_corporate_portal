@@ -1,13 +1,17 @@
+import { url } from 'inspector'
 import {
 	BookOpen,
 	Bot,
 	Calendar,
 	ChevronRight,
+	Newspaper,
+	School,
 	Settings2,
 	SquareTerminal,
 	Users
 } from 'lucide-react'
 import Image from 'next/image'
+import { title } from 'process'
 
 import {
 	Collapsible,
@@ -45,8 +49,24 @@ export async function AppSidebar() {
 			title: 'Users',
 			isActive: true,
 			url: '#',
-			icon: Users,
+			icon: School,
 			items: [{ title: 'Users list', url: '/admin/users' }]
+		}
+	]
+
+	const news_group = [
+		{
+			title: 'News',
+			isActive: true,
+			url: '#',
+			icon: Newspaper,
+			items: [
+				{ title: 'News list', url: '/admin/news' },
+				{
+					title: 'Create News',
+					url: '/admin/news/create'
+				}
+			]
 		}
 	]
 
@@ -57,11 +77,24 @@ export async function AppSidebar() {
 			url: '#',
 			icon: Calendar,
 			items: [
-				{ title: 'Create Event', url: '/admin/events/create' },
 				{
 					title: 'List Events',
 					url: '/admin/events'
-				}
+				},
+				{ title: 'Create Event', url: '/admin/events/create' }
+			]
+		}
+	]
+
+	const clubs_group = [
+		{
+			title: 'Clubs',
+			isActive: true,
+			url: '#',
+			icon: Users,
+			items: [
+				{ title: 'List Clubs', url: '/admin/clubs' },
+				{ title: 'Create Club', url: '/admin/clubs/create' }
 			]
 		}
 	]
@@ -121,7 +154,85 @@ export async function AppSidebar() {
 						))}
 					</SidebarMenu>
 					<SidebarMenu>
+						{news_group.map(item => (
+							<Collapsible
+								key={item.title}
+								asChild
+								defaultOpen={item.isActive}
+								className='group/collapsible'
+							>
+								<SidebarMenuItem>
+									<CollapsibleTrigger asChild>
+										<SidebarMenuButton tooltip={item.title}>
+											{item.icon && <item.icon />}
+											<span>{item.title}</span>
+											<ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+										</SidebarMenuButton>
+									</CollapsibleTrigger>
+									<CollapsibleContent>
+										<SidebarMenuSub>
+											{item.items?.map(subItem => (
+												<SidebarMenuSubItem
+													key={subItem.title}
+												>
+													<SidebarMenuSubButton
+														asChild
+													>
+														<a href={subItem.url}>
+															<span>
+																{subItem.title}
+															</span>
+														</a>
+													</SidebarMenuSubButton>
+												</SidebarMenuSubItem>
+											))}
+										</SidebarMenuSub>
+									</CollapsibleContent>
+								</SidebarMenuItem>
+							</Collapsible>
+						))}
+					</SidebarMenu>
+					<SidebarMenu>
 						{event_group.map(item => (
+							<Collapsible
+								key={item.title}
+								asChild
+								defaultOpen={item.isActive}
+								className='group/collapsible'
+							>
+								<SidebarMenuItem>
+									<CollapsibleTrigger asChild>
+										<SidebarMenuButton tooltip={item.title}>
+											{item.icon && <item.icon />}
+											<span>{item.title}</span>
+											<ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+										</SidebarMenuButton>
+									</CollapsibleTrigger>
+									<CollapsibleContent>
+										<SidebarMenuSub>
+											{item.items?.map(subItem => (
+												<SidebarMenuSubItem
+													key={subItem.title}
+												>
+													<SidebarMenuSubButton
+														asChild
+													>
+														<a href={subItem.url}>
+															<span>
+																{subItem.title}
+															</span>
+														</a>
+													</SidebarMenuSubButton>
+												</SidebarMenuSubItem>
+											))}
+										</SidebarMenuSub>
+									</CollapsibleContent>
+								</SidebarMenuItem>
+							</Collapsible>
+						))}
+					</SidebarMenu>
+					<SidebarMenu>
+						{clubs_group.map(item => (
 							<Collapsible
 								key={item.title}
 								asChild
