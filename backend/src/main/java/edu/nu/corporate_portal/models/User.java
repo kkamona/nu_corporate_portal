@@ -87,7 +87,7 @@ public class User {
 
     @Setter
     @Column(name = "gender", nullable = false)
-    private Gender gender;
+    private String gender;
 
     @Setter
     @Column(name = "interests")
@@ -142,6 +142,7 @@ public class User {
         this.role = registrationDTO.getRole();
         this.profilePicture = registrationDTO.getProfilePicture();
         this.hashedPassword = hashedPassword;
+        this.gender = registrationDTO.getGender();
     }
 
 }

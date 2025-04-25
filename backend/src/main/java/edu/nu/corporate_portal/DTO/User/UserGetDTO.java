@@ -30,7 +30,7 @@ public class UserGetDTO {
     private boolean showSchool;
     private boolean showMajor;
     private boolean showProfilePicture;
-    private Gender gender;
+    private String gender;
     private String interests;
 
     public UserGetDTO(User user) {
@@ -46,8 +46,8 @@ public class UserGetDTO {
         this.school = user.getSchool() != null ? user.getSchool().name() : null;
         this.major = user.getMajor();
         this.role = user.getRole() != null ? user.getRole().name() : null;
-        this.gender = user.getGender() != null ? user.getGender() : null;
         this.interests = user.getInterests();
+        this.gender = user.getGender();
 
         this.showName = user.isShowName();
         this.showContactInfo = user.isShowContactInfo();

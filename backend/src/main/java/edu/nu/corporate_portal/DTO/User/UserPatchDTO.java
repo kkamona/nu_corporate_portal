@@ -28,6 +28,6 @@ public class UserPatchDTO {
     private Boolean showSchool;
     private Boolean showMajor;
     private Boolean showProfilePicture;
-    private Gender gender;
+    private String gender;
     private String interests;
 }

@@ -17,4 +17,5 @@ public class RegistrationDTO {
     private String major;
     private User.Role role;
     private String profilePicture;
+    private String gender;
 }
