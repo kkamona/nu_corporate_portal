@@ -114,4 +114,8 @@ public class ClubService {
         return clubRepository.save(club);
     }
 
+    public List<Club> findClubsByMemberId(Long userId) {
+        return clubRepository.findByMembers_Id(userId);
+    }
+
 }

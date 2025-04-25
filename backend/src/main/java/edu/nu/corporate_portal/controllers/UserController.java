@@ -1,8 +1,10 @@
 package edu.nu.corporate_portal.controllers;
 
+import edu.nu.corporate_portal.DTO.Club.ClubSummaryDTO;
 import edu.nu.corporate_portal.DTO.User.UserGetDTO;
 import edu.nu.corporate_portal.DTO.User.UserPatchDTO;
 import edu.nu.corporate_portal.models.User;
+import edu.nu.corporate_portal.services.ClubService;
 import edu.nu.corporate_portal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final ClubService clubService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ClubService clubService) {
         this.userService = userService;
+        this.clubService = clubService;
     }
 
     @GetMapping
@@ -35,11 +39,26 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    //    @GetMapping("/{id}")
+//    public ResponseEntity<UserGetDTO> getUserById(@PathVariable Long id) {
+//        return userService.getUserById(id)
+//                .map(UserGetDTO::new)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
-                .map(UserGetDTO::new)
-                .map(ResponseEntity::ok)
+                .map(user -> {
+                    UserGetDTO dto = new UserGetDTO(user);
+                    var clubs = clubService.findClubsByMemberId(user.getId())
+                            .stream()
+                            .map(c -> new ClubSummaryDTO(c.getId(), c.getName()))
+                            .toList();
+                    dto.setClubs(clubs);
+                    return ResponseEntity.ok(dto);
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 
