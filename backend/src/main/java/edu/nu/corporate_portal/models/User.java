@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -96,6 +98,9 @@ public class User {
     @Setter
     @Column(name = "refresh_token")
     private String refreshToken;
+
+    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
+    private List<Club> clubs = new ArrayList<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

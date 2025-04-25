@@ -1,12 +1,14 @@
 package edu.nu.corporate_portal.DTO.User;
 
 import com.nimbusds.openid.connect.sdk.claims.Gender;
+import edu.nu.corporate_portal.DTO.Club.ClubSummaryDTO;
 import edu.nu.corporate_portal.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -32,6 +34,7 @@ public class UserGetDTO {
     private boolean showProfilePicture;
     private String gender;
     private String interests;
+    private List<ClubSummaryDTO> clubs;
 
     public UserGetDTO(User user) {
         this.id = user.getId();
@@ -48,6 +51,9 @@ public class UserGetDTO {
         this.role = user.getRole() != null ? user.getRole().name() : null;
         this.interests = user.getInterests();
         this.gender = user.getGender();
+        this.clubs = user.getClubs().stream()
+                .map(c -> new ClubSummaryDTO(c.getId(), c.getName()))
+                .toList();
 
         this.showName = user.isShowName();
         this.showContactInfo = user.isShowContactInfo();
