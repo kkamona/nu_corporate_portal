@@ -50,6 +50,8 @@ public class UserService {
         if (dto.getSchool() != null) user.setSchool(dto.getSchool());
         if (dto.getMajor() != null) user.setMajor(dto.getMajor());
         if (dto.getRole() != null) user.setRole(dto.getRole());
+        if (dto.getInterests() != null) user.setInterests(dto.getInterests());
+        if (dto.getGender() != null) user.setGender(dto.getGender());
 
         if (dto.getShowName() != null) user.setShowName(dto.getShowName());
         if (dto.getShowContactInfo() != null) user.setShowContactInfo(dto.getShowContactInfo());

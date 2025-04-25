@@ -28,11 +28,12 @@ public class PostController {
         this.postService = postService;
     }
 
-//    @PostMapping(consumes = "multipart/form-data")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostGetDTO> createContent(
             @RequestParam("title") String title,
             @RequestParam("text")  String text,
+            @RequestParam("is_news") boolean isNews,
+            @RequestParam(value = "news_thumbnail", required = false) MultipartFile newsThumbnail,
             @RequestParam(value = "attachments", required = false) List<MultipartFile> attachments,
             @AuthenticationPrincipal Jwt jwt
     ) {
@@ -40,9 +41,11 @@ public class PostController {
         PostPostDTO dto = new PostPostDTO();
         dto.setTitle(title);
         dto.setText(text);
+        dto.setNews(isNews);
         PostGetDTO created = postService.createContent(
                 dto,
                 attachments != null ? attachments : List.of(),
+                newsThumbnail,
                 userId
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
