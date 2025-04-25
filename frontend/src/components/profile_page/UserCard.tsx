@@ -35,7 +35,7 @@ const UserCard = ({ user }: { user: UserType }) => {
 		<Card>
 			<CardHeader>
 				<CardTitle className='flex justify-between'>
-					<h3>Your profile</h3>
+					<h3>Personal Information</h3>
 					<div className='flex items-center gap-1'>
 						<Dialog
 							open={dialogState}
@@ -99,12 +99,12 @@ const UserCard = ({ user }: { user: UserType }) => {
 				<CardDescription></CardDescription>
 			</CardHeader>
 			<CardContent>
-				<div className='flex gap-4'>
+				<div className='flex gap-5'>
 					<div className='group relative h-24 w-24'>
 						<img
 							className='h-24 w-24 rounded-full object-cover'
 							src={
-								user.profilePicture
+								user?.profilePicture
 									? user.profilePicture +
 										'?sp=rl&st=2025-04-19T12:00:17Z&se=2025-09-16T20:00:17Z&spr=https&sv=2024-11-04&sr=c&sig=KYbm3kp%2FOaCpvDyzu6Hvh8OBkfb%2Fm04JESmEMqt9y3Q%3D'
 									: '/no-profile.png'
@@ -117,14 +117,14 @@ const UserCard = ({ user }: { user: UserType }) => {
 						<AvatarUploadForm user={user} />
 					</div>
 					<div>
-						<div>{`Full name: ${user.firstName} ${user.lastName}`}</div>
-						<div>{`Email: ${user.email}`}</div>
-						<div>{`School ${user.school}`}</div>
+						<div>{`Full name: ${user?.firstName && user.firstName} ${ user?.lastName && user.lastName}`}</div>
+						<div>{`Email: ${user?.email}`}</div>
+						<div>{`School ${user?.school}`}</div>
 					</div>
 					<div>
-						<div>{`Phone number: ${formatPhone(user.contactInfo)}`}</div>
-						<div>{`Major: ${user.major}`}</div>
-						<div>{`Date of birth: ${user.dateOfBirth}`}</div>
+						<div>{`Phone number: ${user?.contactInfo && formatPhone(user?.contactInfo)}`}</div>
+						<div>{`Gender: ${user?.gender}`}</div>
+						<div>{`Date of birth: ${user?.dateOfBirth}`}</div>
 					</div>
 				</div>
 			</CardContent>

@@ -7,8 +7,6 @@ import { useState } from 'react'
 
 import { useIsMobile } from '@/hooks/use-mobile'
 
-// import { useMobile } from "@/hooks/use-mobile"
-
 const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const isMobile = useIsMobile()
@@ -31,9 +29,13 @@ const Header = () => {
 			url: '/phonebook'
 		},
 		{
+			label: 'NU Threads',
+			url: '/threads'
+		},
+		{
 			label: 'Profile',
 			url: '/profile'
-		}
+		},
 	]
 
 	return (
@@ -59,7 +61,7 @@ const Header = () => {
 						<Link
 							key={index}
 							href={item.url}
-							className='font-medium text-gray-700 transition-colors hover:text-gray-900'
+							className='font-medium text-gray-700 transition-colors hover:text-gray-900 hover:underline'
 						>
 							{item.label}
 						</Link>

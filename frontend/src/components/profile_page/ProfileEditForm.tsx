@@ -61,7 +61,7 @@ const ProfileEditForm = ({
 	)
 	const [school, setSchool] = useState(user.school || '')
 	const [phone, setPhone] = useState(
-		formatPhoneNumber(user.contactInfo) || ''
+		formatPhoneNumber(user.contactInfo || '')
 	)
 	useToastMessage(formState)
 	useEffect(() => {

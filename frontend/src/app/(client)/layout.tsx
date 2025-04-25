@@ -10,7 +10,13 @@ export default function ClintPageLayout({
 		<>
 			<div className='h-10 w-full bg-[var(--nu-gray)]'></div>
 			<Header />
-			<main className="px-4 sm:px-6 lg:px-20">{children}</main>
+			<div
+				className='h-[23px] w-full bg-repeat-x'
+				style={{ backgroundImage: "url('/transparent_border.png')" }}
+			></div>
+			<main className='flex flex-col px-4 sm:px-6 lg:px-20'>
+				{children}
+			</main>
 			<Footer />
 		</>
 	)

@@ -30,7 +30,7 @@ export default async function RootLayout({
 	return (
 		<html lang='en'>
 			<body
-				className={`${inter.variable} ${prata.variable} font-sans antialiased`}
+				className={`${prata.variable} ${inter.variable} font-sans antialiased min-h-screen`}
 			>
 				<ToastProvider>{children}</ToastProvider>
 			</body>

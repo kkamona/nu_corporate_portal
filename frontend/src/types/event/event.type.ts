@@ -8,6 +8,8 @@ export type EventType = {
     location: string
     startDate: string
     endDate: string
+    startTime: string
+    endTime: string
     isPublic: boolean
     targetRoles: UserRole[]
     targetSchools: SchoolType[]
