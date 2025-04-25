@@ -1,5 +1,6 @@
 package edu.nu.corporate_portal.DTO.User;
 
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import edu.nu.corporate_portal.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,8 @@ public class UserGetDTO {
     private boolean showSchool;
     private boolean showMajor;
     private boolean showProfilePicture;
+    private String gender;
+    private String interests;
 
     public UserGetDTO(User user) {
         this.id = user.getId();
@@ -43,6 +46,8 @@ public class UserGetDTO {
         this.school = user.getSchool() != null ? user.getSchool().name() : null;
         this.major = user.getMajor();
         this.role = user.getRole() != null ? user.getRole().name() : null;
+        this.interests = user.getInterests();
+        this.gender = user.getGender();
 
         this.showName = user.isShowName();
         this.showContactInfo = user.isShowContactInfo();
