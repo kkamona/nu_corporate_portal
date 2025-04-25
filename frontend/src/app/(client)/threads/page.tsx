@@ -1,6 +1,7 @@
 // 'use client'
-
-import { serverFetch } from "@/lib/api"
+import PostCard from '@/components/threads_page/PostCard'
+import { serverFetch } from '@/lib/api'
+import { PostType } from '@/types/post/post.type'
 
 // import { useEffect, useRef, useState } from 'react'
 
@@ -64,7 +65,21 @@ import { serverFetch } from "@/lib/api"
 // 	)
 // }
 
+const ThreadsPage = async () => {
+	const response = await serverFetch('/posts?size=5&page=0')
+	const posts: PostType[] = (await response.json()).content
+	console.log(posts)
 
-const ThreadsPage = async ()=>{
-	const response = await serverFetch("/posts")
+	return (
+		<div className=''>
+			<h2 className='mt-4 mb-2'>NU Threads</h2>
+			<div className='my-5 flex flex-col gap-4'>
+				{posts.map(post => (
+					<PostCard post={post} key={post.id} />
+				))}
+			</div>
+		</div>
+	)
 }
+
+export default ThreadsPage

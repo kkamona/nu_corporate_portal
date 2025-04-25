@@ -7,8 +7,10 @@ const ProfilePage = async () => {
 	return (
 		<div>
 			{/* <h1>Profile page</h1> */}
-			<h2 className='mb-2.5 mt-4'>Your profile card</h2>
-			<UserCard user={user}/>
+			<h2 className='mt-4 mb-2.5'>Your profile card</h2>
+			<div className='my-5'>
+				<UserCard user={user} />
+			</div>
 		</div>
 	)
 }
