@@ -1,5 +1,6 @@
 package edu.nu.corporate_portal.models;
 
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import edu.nu.corporate_portal.DTO.Auth.RegistrationDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -84,6 +85,13 @@ public class User {
     @Column(name = "show_profile_picture", nullable = false)
     private boolean showProfilePicture = true;
 
+    @Setter
+    @Column(name = "gender", nullable = false)
+    private Gender gender;
+
+    @Setter
+    @Column(name = "interests")
+    private String interests;
 
     @Setter
     @Column(name = "refresh_token")
