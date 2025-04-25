@@ -10,4 +10,6 @@ import lombok.Setter;
 public class PostPostDTO {
     private String title;
     private String text;
+    private String newThumbnail;
+    private boolean isNews;
 }

@@ -1,5 +1,6 @@
 package edu.nu.corporate_portal.DTO.User;
 
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import edu.nu.corporate_portal.models.User;
 import lombok.Data;
 import lombok.Getter;
@@ -27,4 +28,6 @@ public class UserPatchDTO {
     private Boolean showSchool;
     private Boolean showMajor;
     private Boolean showProfilePicture;
+    private String gender;
+    private String interests;
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -27,16 +28,24 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping(consumes = "multipart/form-data")
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostGetDTO> createContent(
-            @ModelAttribute PostPostDTO dto,
+            @RequestParam("title") String title,
+            @RequestParam("text")  String text,
+            @RequestParam("is_news") boolean isNews,
+            @RequestParam(value = "news_thumbnail", required = false) MultipartFile newsThumbnail,
             @RequestParam(value = "attachments", required = false) List<MultipartFile> attachments,
             @AuthenticationPrincipal Jwt jwt
     ) {
         Long userId = jwt.getClaim("id");
+        PostPostDTO dto = new PostPostDTO();
+        dto.setTitle(title);
+        dto.setText(text);
+        dto.setNews(isNews);
         PostGetDTO created = postService.createContent(
                 dto,
                 attachments != null ? attachments : List.of(),
+                newsThumbnail,
                 userId
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(created);

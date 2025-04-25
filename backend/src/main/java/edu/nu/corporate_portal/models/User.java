@@ -1,5 +1,6 @@
 package edu.nu.corporate_portal.models;
 
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import edu.nu.corporate_portal.DTO.Auth.RegistrationDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -84,10 +87,20 @@ public class User {
     @Column(name = "show_profile_picture", nullable = false)
     private boolean showProfilePicture = true;
 
+    @Setter
+    @Column(name = "gender", nullable = false)
+    private String gender;
+
+    @Setter
+    @Column(name = "interests")
+    private String interests;
 
     @Setter
     @Column(name = "refresh_token")
     private String refreshToken;
+
+    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
+    private List<Club> clubs = new ArrayList<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -102,7 +115,6 @@ public class User {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
 
     public enum Role {
         STUDENT, ADMIN, PROFESSOR, STAFF
@@ -135,6 +147,7 @@ public class User {
         this.role = registrationDTO.getRole();
         this.profilePicture = registrationDTO.getProfilePicture();
         this.hashedPassword = hashedPassword;
+        this.gender = registrationDTO.getGender();
     }
 
 }
