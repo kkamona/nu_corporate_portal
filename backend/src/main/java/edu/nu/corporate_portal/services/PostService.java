@@ -36,6 +36,7 @@ public class PostService {
     public PostGetDTO createContent(
             PostPostDTO dto,
             List<MultipartFile> attachments,
+            MultipartFile newsThumbnail,
             Long userId
     ) {
         System.out.println(dto);
@@ -47,10 +48,18 @@ public class PostService {
                 .map(storage::uploadFile)
                 .collect(Collectors.toList());
 
+
+        String thumbnailUrl = null;
+        if (newsThumbnail != null && !newsThumbnail.isEmpty()) {
+            thumbnailUrl = storage.uploadFile(newsThumbnail);
+        }
+
         Post post = new Post();
         post.setTitle(dto.getTitle());
         post.setText(dto.getText());
+        post.setNews(dto.isNews());
         post.setAttachments(attachUrls);
+        post.setNewsThumbnail(thumbnailUrl);
         post.setUser(user);
 
         Post saved = postRepo.save(post);
@@ -107,7 +116,9 @@ public class PostService {
                 c.getUser().getId(),
                 c.getTitle(),
                 c.getText(),
-                c.getAttachments()
+                c.getAttachments(),
+                c.isNews(),
+                c.getNewsThumbnail()
         );
     }
 }
