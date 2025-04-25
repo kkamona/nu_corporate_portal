@@ -3,6 +3,9 @@ import { fromErrorToFormState, toFormState } from "@/utils/to-form-state";
 
 export const createPost = async (formState: FormState, formData: FormData) => {
     try {
+        const validatedFields = {
+            title
+        }
         return toFormState("SUCCESS", "Created")
     } catch (error) {
         return fromErrorToFormState(error)
